@@ -6,19 +6,19 @@
 //  Copyright (c) 2014 com.hao. All rights reserved.
 //
 
-#import "DouOAuthService.h"
+#import "DouApiClient.h"
 #import "DouApiDefines.h"
 
-@implementation DouOAuthService
+@implementation DouApiClient
 
 + (id)sharedInstance
 {
-    static DouOAuthService *singleInstance = nil;
+    static DouApiClient *singleInstance = nil;
     static dispatch_once_t onceToken;
     
     dispatch_once(&onceToken, ^{
         if (!singleInstance) {
-            singleInstance = [[DouOAuthService alloc] init];
+            singleInstance = [[DouApiClient alloc] init];
         }
     });
     

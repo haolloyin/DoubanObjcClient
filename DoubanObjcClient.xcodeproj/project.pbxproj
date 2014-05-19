@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F48E3EC192893300052E461 /* DouOAuthService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F48E3EB192893300052E461 /* DouOAuthService.m */; };
+		3F48E3EC192893300052E461 /* DouApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F48E3EB192893300052E461 /* DouApiClient.m */; };
 		3F48E3EF1928A0650052E461 /* DouOAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F48E3EE1928A0650052E461 /* DouOAuthViewController.m */; };
 		3FBE97AB1927CD1E006D710B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBE97AA1927CD1E006D710B /* Foundation.framework */; };
 		3FBE97AD1927CD1E006D710B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBE97AC1927CD1E006D710B /* CoreGraphics.framework */; };
@@ -37,8 +37,8 @@
 
 /* Begin PBXFileReference section */
 		3F48E3E9192890C00052E461 /* DouApiDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DouApiDefines.h; sourceTree = "<group>"; };
-		3F48E3EA192893300052E461 /* DouOAuthService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DouOAuthService.h; sourceTree = "<group>"; };
-		3F48E3EB192893300052E461 /* DouOAuthService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DouOAuthService.m; sourceTree = "<group>"; };
+		3F48E3EA192893300052E461 /* DouApiClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DouApiClient.h; sourceTree = "<group>"; };
+		3F48E3EB192893300052E461 /* DouApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DouApiClient.m; sourceTree = "<group>"; };
 		3F48E3ED1928A0650052E461 /* DouOAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DouOAuthViewController.h; sourceTree = "<group>"; };
 		3F48E3EE1928A0650052E461 /* DouOAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DouOAuthViewController.m; sourceTree = "<group>"; };
 		3FBE97A71927CD1E006D710B /* DoubanObjcClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoubanObjcClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -90,8 +90,8 @@
 			isa = PBXGroup;
 			children = (
 				3F48E3E9192890C00052E461 /* DouApiDefines.h */,
-				3F48E3EA192893300052E461 /* DouOAuthService.h */,
-				3F48E3EB192893300052E461 /* DouOAuthService.m */,
+				3F48E3EA192893300052E461 /* DouApiClient.h */,
+				3F48E3EB192893300052E461 /* DouApiClient.m */,
 				3F48E3ED1928A0650052E461 /* DouOAuthViewController.h */,
 				3F48E3EE1928A0650052E461 /* DouOAuthViewController.m */,
 			);
@@ -272,7 +272,7 @@
 			files = (
 				3FBE97B71927CD1E006D710B /* main.m in Sources */,
 				3FBE97C11927CD1E006D710B /* DouViewController.m in Sources */,
-				3F48E3EC192893300052E461 /* DouOAuthService.m in Sources */,
+				3F48E3EC192893300052E461 /* DouApiClient.m in Sources */,
 				3FBE97BB1927CD1E006D710B /* DouAppDelegate.m in Sources */,
 				3F48E3EF1928A0650052E461 /* DouOAuthViewController.m in Sources */,
 			);

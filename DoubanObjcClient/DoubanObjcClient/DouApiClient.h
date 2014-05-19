@@ -10,17 +10,17 @@
 
 typedef void (^DouReqBlock)(NSData *); // 专门用于返回 API 请求响应结果
 
-@class DouOAuthService;
+@class DouApiClient;
 
 @protocol DouOAuthServiceDelegate <NSObject>
 @required
-- (void)OAuthClient:(DouOAuthService *)client didSuccessWithDictionary:(NSDictionary *)dic;
+- (void)OAuthClient:(DouApiClient *)client didSuccessWithDictionary:(NSDictionary *)dic;
 
-- (void)OAuthClient:(DouOAuthService *)client didFailWithError:(NSError *)error;
+- (void)OAuthClient:(DouApiClient *)client didFailWithError:(NSError *)error;
 @end
 
 
-@interface DouOAuthService : NSObject
+@interface DouApiClient : NSObject
 
 @property (nonatomic, strong) NSString *clientId;
 @property (nonatomic, strong) NSString *clientSecret;

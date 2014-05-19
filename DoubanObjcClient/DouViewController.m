@@ -7,7 +7,7 @@
 //
 
 #import "DouViewController.h"
-#import "DoubanObjcClient/DouOAuthService.h"
+#import "DoubanObjcClient/DouApiClient.h"
 
 @interface DouViewController ()
 
@@ -55,7 +55,7 @@
 
 - (IBAction)beginOAuth:(id)sender {
     
-    DouOAuthService *service = [DouOAuthService sharedInstance];
+    DouApiClient *service = [DouApiClient sharedInstance];
     if ([service shouldOAuth]) {
         [self performSegueWithIdentifier:@"BeginDoubanOAuth" sender:nil];
     }
@@ -69,14 +69,14 @@
 }
 
 - (IBAction)clearTokens:(id)sender {
-    DouOAuthService *service = [DouOAuthService sharedInstance];
-    [service clearTokens];
+    DouApiClient *client = [DouApiClient sharedInstance];
+    [client clearTokens];
     
     [self showAlertView:@"Tokens 已清空，需要重新授权"];
 }
 
 - (IBAction)testGetRequest:(id)sender {
-    DouOAuthService *service = [DouOAuthService sharedInstance];
+    DouApiClient *client = [DouApiClient sharedInstance];
     
     DouReqBlock callbackBlock = ^(NSData * data){
 
@@ -86,10 +86,10 @@
     };
     
 //    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/user_timeline/%@", [service user_id]];
-//    [service get:url withCompletionBlock:callbackBlock];
+//    [client get:url withCompletionBlock:callbackBlock];
     
-    NSString *url = [NSString stringWithFormat:@"v2/user/~me", nil];
-    [service httpsGet:url withCompletionBlock:callbackBlock];
+    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/home_timeline", nil];
+    [client httpsGet:url withCompletionBlock:callbackBlock];
 }
 
 - (IBAction)testDeleteRequest:(id)sender {

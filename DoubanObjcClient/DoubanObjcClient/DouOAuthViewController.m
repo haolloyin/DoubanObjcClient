@@ -8,7 +8,7 @@
 
 #import "DouOAuthViewController.h"
 #import "DouApiDefines.h"
-#import "DouOAuthService.h"
+#import "DouApiClient.h"
 
 @interface NSString (ParseCategory)
 - (NSMutableDictionary *)explodeToDictionaryInnerGlue:(NSString *)innerGlue
@@ -74,7 +74,7 @@
     self.webView.scalesPageToFit = YES;
     self.webView.delegate = self;
     
-    NSURLRequest *req = [[DouOAuthService sharedInstance] getOAuthRequest];
+    NSURLRequest *req = [[DouApiClient sharedInstance] getOAuthRequest];
     [self.webView loadRequest:req];
     
     [self.view addSubview:self.webView];
@@ -106,7 +106,7 @@
         
         // access_accepted
         NSString *code            = [parsedQuery objectForKey:@"code"];
-        DouOAuthService *service  = [DouOAuthService sharedInstance];
+        DouApiClient *service  = [DouApiClient sharedInstance];
         service.clientId          = kApiKey;
         service.clientSecret      = kApiSecret;
         service.redirectURL       = kRedirectURL;
@@ -122,12 +122,12 @@
 
 #pragma mark - DouOAuthServiceDelegate
 
-- (void)OAuthClient:(DouOAuthService *)client didSuccessWithDictionary:(NSDictionary *)dic
+- (void)OAuthClient:(DouApiClient *)client didSuccessWithDictionary:(NSDictionary *)dic
 {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)OAuthClient:(DouOAuthService *)client didFailWithError:(NSError *)error
+- (void)OAuthClient:(DouApiClient *)client didFailWithError:(NSError *)error
 {
     
 }
