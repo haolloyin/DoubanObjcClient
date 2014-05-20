@@ -124,19 +124,25 @@
 
 - (void)OAuthClient:(DouApiClient *)client didSuccessWithDictionary:(NSDictionary *)dic
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    NSLog(@"");
+    [self dismissViewControllerAnimated:YES completion:nil]; // modal 时去掉注释
+//    [self.navigationController popViewControllerAnimated:YES]; // push 时去掉注释
 }
 
 - (void)OAuthClient:(DouApiClient *)client didFailWithError:(NSError *)error
 {
-    
+    NSLog(@"");
 }
 
 #pragma mark - IBAction
 
+// 注意：1.如果使用 modal 弹出方式，必须在 IB 中将 DouOAuthViewController 嵌入到 UINavigationController
+//      2.如果使用 push 弹出方式，则直接拖拽 segue 到 DouOAuthViewController 即可
+// 但是：以上两种情况，用户都必须重新在 IB 中重新拖拽左上角「取消」按钮到这个 IBAction 来建立响应
 - (IBAction)cancelOAuth:(id)sender {
     NSLog(@"");
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil]; // modal 时去掉注释
+//    [self.navigationController popViewControllerAnimated:YES]; // push 时去掉注释
 }
 
 

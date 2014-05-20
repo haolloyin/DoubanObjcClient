@@ -60,6 +60,7 @@
                                if (!error && !dict[@"code"]) {
                                    
                                    [self saveTokens:dict];
+                                   NSLog(@"tokens saved");
                                    [self.delegate OAuthClient:self didSuccessWithDictionary:dict];
                                }
                                else {
