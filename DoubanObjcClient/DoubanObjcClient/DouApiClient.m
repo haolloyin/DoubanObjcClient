@@ -103,7 +103,7 @@
     [USER_DEFAULTS setObject:dict[kAccessTokenKey] forKey:kAccessTokenKey];
     [USER_DEFAULTS setObject:dict[kRefreshTokenKey] forKey:kRefreshTokenKey];
     [USER_DEFAULTS setObject:dict[kDoubanUserIdKey] forKey:kDoubanUserIdKey];
-    [USER_DEFAULTS setObject:dict[kdoubanUserNameKey] forKey:kdoubanUserNameKey];
+    [USER_DEFAULTS setObject:dict[kDoubanUserNameKey] forKey:kDoubanUserNameKey];
     
     NSUInteger expiresSecond = [dict[kExpiresInKey] integerValue];
     [USER_DEFAULTS setObject:[[NSDate date] dateByAddingTimeInterval:expiresSecond] forKey:kExpiresInKey];
@@ -116,7 +116,7 @@
     [USER_DEFAULTS removeObjectForKey:kAccessTokenKey];
     [USER_DEFAULTS removeObjectForKey:kRefreshTokenKey];
     [USER_DEFAULTS removeObjectForKey:kDoubanUserIdKey];
-    [USER_DEFAULTS removeObjectForKey:kdoubanUserNameKey];
+    [USER_DEFAULTS removeObjectForKey:kDoubanUserNameKey];
     [USER_DEFAULTS removeObjectForKey:kExpiresInKey];
     [USER_DEFAULTS synchronize];
 }

@@ -8,6 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+typedef enum : NSUInteger {
+    DouOAuthViewPresentWithPush,
+    DouOAuthViewPresentWithModal
+} DouOAuthViewPresentStype; // OAuthViewController 的弹出方式
+
 @interface DouOAuthViewController : UIViewController <UIWebViewDelegate>
+
+@property (nonatomic, assign) DouOAuthViewPresentStype presentStype;
 
 @end

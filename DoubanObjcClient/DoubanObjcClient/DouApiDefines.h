@@ -29,7 +29,7 @@
 #pragma mark - 用于保存各种 token
 
 #define kDoubanUserIdKey            @"douban_user_id"
-#define kdoubanUserNameKey          @"douban_user_name"
+#define kDoubanUserNameKey          @"douban_user_name"
 #define kAccessTokenKey             @"access_token"
 #define kRefreshTokenKey            @"refresh_token"
 #define kExpiresInKey               @"expires_in"

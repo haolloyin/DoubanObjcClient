@@ -41,6 +41,7 @@
 		3F48E3EB192893300052E461 /* DouApiClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DouApiClient.m; sourceTree = "<group>"; };
 		3F48E3ED1928A0650052E461 /* DouOAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DouOAuthViewController.h; sourceTree = "<group>"; };
 		3F48E3EE1928A0650052E461 /* DouOAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DouOAuthViewController.m; sourceTree = "<group>"; };
+		3FB742C0192BBF1B008A00C7 /* DouObjcClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DouObjcClient.h; sourceTree = "<group>"; };
 		3FBE97A71927CD1E006D710B /* DoubanObjcClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoubanObjcClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FBE97AA1927CD1E006D710B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3FBE97AC1927CD1E006D710B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -89,6 +90,7 @@
 		3F48E3E819288FE30052E461 /* DoubanObjcClient */ = {
 			isa = PBXGroup;
 			children = (
+				3FB742C0192BBF1B008A00C7 /* DouObjcClient.h */,
 				3F48E3E9192890C00052E461 /* DouApiDefines.h */,
 				3F48E3EA192893300052E461 /* DouApiClient.h */,
 				3F48E3EB192893300052E461 /* DouApiClient.m */,

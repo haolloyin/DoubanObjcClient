@@ -56,6 +56,7 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        _presentStype = DouOAuthViewPresentWithModal; // 默认用 modal 方式
     }
     return self;
 }
@@ -124,9 +125,14 @@
 
 - (void)OAuthClient:(DouApiClient *)client didSuccessWithDictionary:(NSDictionary *)dic
 {
-    NSLog(@"");
-    [self dismissViewControllerAnimated:YES completion:nil]; // modal 时去掉注释
-//    [self.navigationController popViewControllerAnimated:YES]; // push 时去掉注释
+    NSLog(@"_presentStype: %d", _presentStype);
+    
+    if (_presentStype == DouOAuthViewPresentWithModal) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else if (_presentStype == DouOAuthViewPresentWithPush) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 - (void)OAuthClient:(DouApiClient *)client didFailWithError:(NSError *)error
@@ -136,13 +142,16 @@
 
 #pragma mark - IBAction
 
-// 注意：1.如果使用 modal 弹出方式，必须在 IB 中将 DouOAuthViewController 嵌入到 UINavigationController
-//      2.如果使用 push 弹出方式，则直接拖拽 segue 到 DouOAuthViewController 即可
-// 但是：以上两种情况，用户都必须重新在 IB 中重新拖拽左上角「取消」按钮到这个 IBAction 来建立响应
+// 注意：用户必须重新在 IB 中重新拖拽左上角「取消」按钮到这个 IBAction 来建立响应
 - (IBAction)cancelOAuth:(id)sender {
-    NSLog(@"");
-    [self dismissViewControllerAnimated:YES completion:nil]; // modal 时去掉注释
-//    [self.navigationController popViewControllerAnimated:YES]; // push 时去掉注释
+    NSLog(@"_presentStype: %d", _presentStype);
+    
+    if (_presentStype == DouOAuthViewPresentWithModal) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+    else if (_presentStype == DouOAuthViewPresentWithPush) {
+        [self.navigationController popViewControllerAnimated:YES];
+    }
 }
 
 

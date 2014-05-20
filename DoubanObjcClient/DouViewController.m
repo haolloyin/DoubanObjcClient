@@ -7,7 +7,7 @@
 //
 
 #import "DouViewController.h"
-#import "DoubanObjcClient/DouApiClient.h"
+#import "DoubanObjcClient/DouObjcClient.h"
 
 @interface DouViewController ()
 
@@ -38,6 +38,13 @@
     NSString *identifier = segue.identifier;
     
     NSLog(@"identifier: %@", identifier);
+    
+    if ([segue.identifier isEqualToString:@"BeginDoubanOAuth"]) {
+        // 如果确定用 modal 方式，要先取出 NavagationController 的 topViewController 再赋值
+        UINavigationController *navController = segue.destinationViewController;
+        DouOAuthViewController *controller = (DouOAuthViewController *)navController.topViewController;
+        controller.presentStype = DouOAuthViewPresentWithModal;
+    }
 }
 
 
@@ -65,7 +72,6 @@
 }
 
 - (IBAction)refrechToken:(id)sender {
-    
 }
 
 - (IBAction)clearTokens:(id)sender {
