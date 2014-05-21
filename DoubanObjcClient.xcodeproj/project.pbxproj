@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		3F48E3EC192893300052E461 /* DouApiClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F48E3EB192893300052E461 /* DouApiClient.m */; };
 		3F48E3EF1928A0650052E461 /* DouOAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F48E3EE1928A0650052E461 /* DouOAuthViewController.m */; };
-		3FB742F7192BC743008A00C7 /* LICENSE.md in Resources */ = {isa = PBXBuildFile; fileRef = 3FB742CD192BC743008A00C7 /* LICENSE.md */; };
 		3FB742F8192BC743008A00C7 /* EXTRuntimeExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB742D2192BC743008A00C7 /* EXTRuntimeExtensions.m */; };
 		3FB742F9192BC743008A00C7 /* EXTScope.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB742D4192BC743008A00C7 /* EXTScope.m */; };
 		3FB742FA192BC743008A00C7 /* Mantle-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3FB742D6192BC743008A00C7 /* Mantle-Info.plist */; };
@@ -25,9 +24,6 @@
 		3FB74304192BC743008A00C7 /* NSObject+MTLComparisonAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB742EC192BC743008A00C7 /* NSObject+MTLComparisonAdditions.m */; };
 		3FB74305192BC743008A00C7 /* NSValueTransformer+MTLInversionAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB742EE192BC743008A00C7 /* NSValueTransformer+MTLInversionAdditions.m */; };
 		3FB74306192BC743008A00C7 /* NSValueTransformer+MTLPredefinedTransformerAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB742F0192BC743008A00C7 /* NSValueTransformer+MTLPredefinedTransformerAdditions.m */; };
-		3FB74307192BC743008A00C7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3FB742F1192BC743008A00C7 /* README.md */; };
-		3FB74308192BC743008A00C7 /* LICENCE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 3FB742F3192BC743008A00C7 /* LICENCE.txt */; };
-		3FB74309192BC743008A00C7 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 3FB742F4192BC743008A00C7 /* README.md */; };
 		3FB7430A192BC743008A00C7 /* STHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB742F6192BC743008A00C7 /* STHTTPRequest.m */; };
 		3FBE97AB1927CD1E006D710B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBE97AA1927CD1E006D710B /* Foundation.framework */; };
 		3FBE97AD1927CD1E006D710B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBE97AC1927CD1E006D710B /* CoreGraphics.framework */; };
@@ -62,7 +58,6 @@
 		3F48E3ED1928A0650052E461 /* DouOAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DouOAuthViewController.h; sourceTree = "<group>"; };
 		3F48E3EE1928A0650052E461 /* DouOAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DouOAuthViewController.m; sourceTree = "<group>"; };
 		3FB742C0192BBF1B008A00C7 /* DouObjcClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DouObjcClient.h; sourceTree = "<group>"; };
-		3FB742CD192BC743008A00C7 /* LICENSE.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE.md; sourceTree = "<group>"; };
 		3FB742D0192BC743008A00C7 /* EXTKeyPathCoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTKeyPathCoding.h; sourceTree = "<group>"; };
 		3FB742D1192BC743008A00C7 /* EXTRuntimeExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTRuntimeExtensions.h; sourceTree = "<group>"; };
 		3FB742D2192BC743008A00C7 /* EXTRuntimeExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EXTRuntimeExtensions.m; sourceTree = "<group>"; };
@@ -96,9 +91,6 @@
 		3FB742EE192BC743008A00C7 /* NSValueTransformer+MTLInversionAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValueTransformer+MTLInversionAdditions.m"; sourceTree = "<group>"; };
 		3FB742EF192BC743008A00C7 /* NSValueTransformer+MTLPredefinedTransformerAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSValueTransformer+MTLPredefinedTransformerAdditions.h"; sourceTree = "<group>"; };
 		3FB742F0192BC743008A00C7 /* NSValueTransformer+MTLPredefinedTransformerAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSValueTransformer+MTLPredefinedTransformerAdditions.m"; sourceTree = "<group>"; };
-		3FB742F1192BC743008A00C7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
-		3FB742F3192BC743008A00C7 /* LICENCE.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENCE.txt; sourceTree = "<group>"; };
-		3FB742F4192BC743008A00C7 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		3FB742F5192BC743008A00C7 /* STHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STHTTPRequest.h; sourceTree = "<group>"; };
 		3FB742F6192BC743008A00C7 /* STHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STHTTPRequest.m; sourceTree = "<group>"; };
 		3FBE97A71927CD1E006D710B /* DoubanObjcClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoubanObjcClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -172,8 +164,6 @@
 		3FB742CC192BC743008A00C7 /* Mantle */ = {
 			isa = PBXGroup;
 			children = (
-				3FB742CD192BC743008A00C7 /* LICENSE.md */,
-				3FB742F1192BC743008A00C7 /* README.md */,
 				3FB742CE192BC743008A00C7 /* Mantle */,
 			);
 			path = Mantle;
@@ -230,8 +220,6 @@
 		3FB742F2192BC743008A00C7 /* STHTTPRequest */ = {
 			isa = PBXGroup;
 			children = (
-				3FB742F3192BC743008A00C7 /* LICENCE.txt */,
-				3FB742F4192BC743008A00C7 /* README.md */,
 				3FB742F5192BC743008A00C7 /* STHTTPRequest.h */,
 				3FB742F6192BC743008A00C7 /* STHTTPRequest.m */,
 			);
@@ -389,13 +377,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3FB74307192BC743008A00C7 /* README.md in Resources */,
-				3FB742F7192BC743008A00C7 /* LICENSE.md in Resources */,
 				3FBE97C31927CD1E006D710B /* Images.xcassets in Resources */,
 				3FBE97B51927CD1E006D710B /* InfoPlist.strings in Resources */,
-				3FB74308192BC743008A00C7 /* LICENCE.txt in Resources */,
 				3FBE97BE1927CD1E006D710B /* Main.storyboard in Resources */,
-				3FB74309192BC743008A00C7 /* README.md in Resources */,
 				3FB742FA192BC743008A00C7 /* Mantle-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
