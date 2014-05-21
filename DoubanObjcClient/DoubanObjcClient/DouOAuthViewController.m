@@ -123,6 +123,12 @@
 
 #pragma mark - DouOAuthServiceDelegate
 
+/**
+ *  OAuth 授权成功的回调代理，会根据 _presentStype 属性判断是 modal 还是 push 方式
+ *
+ *  @param client client description
+ *  @param dic    <#dic description#>
+ */
 - (void)OAuthClient:(DouApiClient *)client didSuccessWithDictionary:(NSDictionary *)dic
 {
     NSLog(@"_presentStype: %d", _presentStype);
@@ -135,6 +141,12 @@
     }
 }
 
+/**
+ *  OAuth 授权失败的回调代理
+ *
+ *  @param client <#client description#>
+ *  @param error  <#error description#>
+ */
 - (void)OAuthClient:(DouApiClient *)client didFailWithError:(NSError *)error
 {
     NSLog(@"");
@@ -142,7 +154,11 @@
 
 #pragma mark - IBAction
 
-// 注意：用户必须重新在 IB 中重新拖拽左上角「取消」按钮到这个 IBAction 来建立响应
+/**
+ *  注意：用户必须重新在 IB 中重新拖拽左上角「取消」按钮到这个 IBAction 来建立响应
+ *
+ *  @param sender
+ */
 - (IBAction)cancelOAuth:(id)sender {
     NSLog(@"_presentStype: %d", _presentStype);
     

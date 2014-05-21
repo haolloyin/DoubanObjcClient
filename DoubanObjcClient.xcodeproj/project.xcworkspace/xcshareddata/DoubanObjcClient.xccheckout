@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>1C077421-D019-4C2A-A829-11DBEF40404D</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DoubanObjcClient</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>25DB5320-EF42-41E3-B44A-58E15897AD07</key>
+		<string>ssh://gitcafe.com/haoio/DoubanObjcClient.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>DoubanObjcClient.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>25DB5320-EF42-41E3-B44A-58E15897AD07</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://gitcafe.com/haoio/DoubanObjcClient.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>25DB5320-EF42-41E3-B44A-58E15897AD07</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>25DB5320-EF42-41E3-B44A-58E15897AD07</string>
+			<key>IDESourceControlWCCName</key>
+			<string>DoubanObjcClient</string>
+		</dict>
+	</array>
+</dict>
+</plist>

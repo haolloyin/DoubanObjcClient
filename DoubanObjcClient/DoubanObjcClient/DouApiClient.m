@@ -28,6 +28,11 @@
 
 #pragma mark - OAuth
 
+/**
+ *  获取一个用于开始 OAuth 授权的 NSURLRequest 实例，用于在 WebView 中访问
+ *
+ *  @return <#return value description#>
+ */
 - (NSURLRequest *)getOAuthRequest
 {
     NSString *url = [[NSString stringWithFormat:@"%@?client_id=%@&redirect_uri=%@&response_type=code&scope=%@",
@@ -37,6 +42,10 @@
     return req;
 }
 
+/**
+ *  验证用户 OAuth 授权的第一步获取到的 authorization_code 是否有效，
+ *  如有效则得到 access_token 等信息并保存至本地
+ */
 - (void)validateAuthorizationCode
 {
     NSURL *URL                   = [NSURL URLWithString:kTokenURL];
@@ -69,6 +78,9 @@
                            }];
 }
 
+/**
+ *  用本地保存的 refresh_token 更新 access_token，并保存至本地
+ */
 - (void)validateRefreshToken
 {
     NSURL *URL                   = [NSURL URLWithString:kTokenURL];
@@ -98,6 +110,11 @@
 
 #pragma mark - OAuth data
 
+/**
+ *  当 OAuth 授权成功，或更新 access_token 成功时，传入 dict 保存所有 token 信息
+ *
+ *  @param dict 豆瓣返回的 access_token 信息
+ */
 - (void)saveTokens:(NSDictionary *)dict
 {
     [USER_DEFAULTS setObject:dict[kAccessTokenKey] forKey:kAccessTokenKey];
@@ -111,6 +128,9 @@
     [USER_DEFAULTS synchronize];
 }
 
+/**
+ *  清空本地所有跟 OAuth 相关的 token 等
+ */
 - (void)clearTokens
 {
     [USER_DEFAULTS removeObjectForKey:kAccessTokenKey];
@@ -139,6 +159,11 @@
     return user;
 }
 
+/**
+ *  本地保存的 access_token 是否已过期
+ *
+ *  @return <#return value description#>
+ */
 - (BOOL)hasExpired
 {
     NSDate *expireTime = [USER_DEFAULTS objectForKey:kExpiresInKey];
@@ -152,6 +177,11 @@
     }
 }
 
+/**
+ *  是否应该进行 OAuth 授权，当本地没有 access_token 或过期时间，需要重新授权
+ *
+ *  @return <#return value description#>
+ */
 - (BOOL)shouldOAuth
 {
     NSString *access     = [USER_DEFAULTS objectForKey:kAccessTokenKey];
@@ -164,6 +194,11 @@
     return NO;
 }
 
+/**
+ *  是否需要更新 access_token，如果不需要 OAuth 但是已经过期时，需要更新 access_token
+ *
+ *  @return <#return value description#>
+ */
 - (BOOL)shouldRefreshToken
 {
     if (![self shouldOAuth] && [self hasExpired]) {
