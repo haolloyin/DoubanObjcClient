@@ -8,6 +8,7 @@
 
 #import "DouViewController.h"
 #import "DoubanObjcClient/DouObjcClient.h"
+#import "DoubanObjcClient/model/DoubanShuo.h"
 
 @interface DouViewController ()
 
@@ -82,20 +83,20 @@
 }
 
 - (IBAction)testGetRequest:(id)sender {
-    DouApiClient *client = [DouApiClient sharedInstance];
-    
-    DouReqBlock callbackBlock = ^(NSData * data){
-
-        NSString *respString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-        NSLog(@"respString:\n%@", respString);
-        self.respView.text = respString;
-    };
+//    DouApiClient *client = [DouApiClient sharedInstance];
+//    DouReqBlock callbackBlock = ^(NSData * data){
+//        NSString *respString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+//        NSLog(@"respString:\n%@", respString);
+//        self.respView.text = respString;
+//    };
     
 //    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/user_timeline/%@", [service user_id]];
 //    [client get:url withCompletionBlock:callbackBlock];
     
-    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/home_timeline", nil];
-    [client httpsGet:url withCompletionBlock:callbackBlock];
+//    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/home_timeline", nil];
+//    [client httpsGet:url withCompletionBlock:callbackBlock];
+    
+    [DoubanShuo statusesWithId:1394467451]; // 测试获取一条广播
 }
 
 - (IBAction)testDeleteRequest:(id)sender {

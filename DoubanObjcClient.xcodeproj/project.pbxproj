@@ -43,6 +43,7 @@
 		3FBE97CC1927CD1E006D710B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBE97AE1927CD1E006D710B /* UIKit.framework */; };
 		3FBE97D41927CD1E006D710B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3FBE97D21927CD1E006D710B /* InfoPlist.strings */; };
 		3FBE97D61927CD1E006D710B /* DoubanObjcClientTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FBE97D51927CD1E006D710B /* DoubanObjcClientTests.m */; };
+		3FD6026D192E5F4500DF0C13 /* DoubanBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FD6026C192E5F4500DF0C13 /* DoubanBaseModel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +123,8 @@
 		3FBE97D11927CD1E006D710B /* DoubanObjcClientTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DoubanObjcClientTests-Info.plist"; sourceTree = "<group>"; };
 		3FBE97D31927CD1E006D710B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3FBE97D51927CD1E006D710B /* DoubanObjcClientTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DoubanObjcClientTests.m; sourceTree = "<group>"; };
+		3FD6026B192E5F4500DF0C13 /* DoubanBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DoubanBaseModel.h; sourceTree = "<group>"; };
+		3FD6026C192E5F4500DF0C13 /* DoubanBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DoubanBaseModel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -216,6 +219,8 @@
 		3F982AD3192E549E00FD22AF /* model */ = {
 			isa = PBXGroup;
 			children = (
+				3FD6026B192E5F4500DF0C13 /* DoubanBaseModel.h */,
+				3FD6026C192E5F4500DF0C13 /* DoubanBaseModel.m */,
 				3F982AD4192E54AC00FD22AF /* DoubanShuo.h */,
 				3F982AD5192E54AC00FD22AF /* DoubanShuo.m */,
 				3F982ADA192E559500FD22AF /* DoubanUser.h */,
@@ -424,6 +429,7 @@
 				3F982ACF192E548800FD22AF /* NSObject+MTLComparisonAdditions.m in Sources */,
 				3F982ACC192E548800FD22AF /* NSArray+MTLManipulationAdditions.m in Sources */,
 				3F982ACA192E548800FD22AF /* MTLReflection.m in Sources */,
+				3FD6026D192E5F4500DF0C13 /* DoubanBaseModel.m in Sources */,
 				3F982ADC192E559500FD22AF /* DoubanUser.m in Sources */,
 				3F982AC3192E548800FD22AF /* EXTScope.m in Sources */,
 				3F982ACE192E548800FD22AF /* NSError+MTLModelException.m in Sources */,

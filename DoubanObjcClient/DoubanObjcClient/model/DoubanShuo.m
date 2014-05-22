@@ -13,28 +13,21 @@
 
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
-             @"id": @"id",
-             @"title": @"title",
-             @"text": @"text",
-             @"reshared_count": @"reshared_count",
-             @"like_count": @"like_count",
-             @"comments_count": @"comments_count",
-             @"can_reply": @"can_reply",
-             @"liked": @"liked",
-             @"created_at": @"created_at",
-             @"user": @"user",
-             @"reshared_status": @"reshared_status"
-             };
+        @"iid": @"id",
+        @"title": @"title",
+        @"text": @"text",
+        @"reshared_count": @"reshared_count",
+        @"like_count": @"like_count",
+        @"comments_count": @"comments_count",
+        @"can_reply": @"can_reply",
+        @"liked": @"liked",
+        @"createdAt": @"created_at",
+        @"user": @"user",
+        @"reshared_status": @"reshared_status"
+    };
 }
 
-+ (NSDateFormatter *)dateFormatter {
-    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-    dateFormatter.locale = [[NSLocale alloc] initWithLocaleIdentifier:@"en_US_POSIX"];
-    dateFormatter.dateFormat = @"yyyy-MM-dd'T'HH:mm:ss'Z'";
-    return dateFormatter;
-}
-
-+ (NSValueTransformer *)created_atJSONTransformer {
++ (NSValueTransformer *)createdAtJSONTransformer {
     return [MTLValueTransformer reversibleTransformerWithForwardBlock:^(NSString *str) {
         return [self.dateFormatter dateFromString:str];
     } reverseBlock:^(NSDate *date) {
