@@ -14,12 +14,12 @@
  */
 @interface DoubanUser : DoubanBaseModel
 
-@property (nonatomic, copy) NSString *iid;
+@property (nonatomic, assign) NSUInteger iid;
 @property (nonatomic, copy) NSString *uid;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, copy) NSString *screen_name;
-@property (nonatomic, copy) NSString *avatar;
-@property (nonatomic, copy) NSString *alt;
+@property (nonatomic, strong) NSURL *avatar;
+@property (nonatomic, strong) NSURL *alt;
 @property (nonatomic, copy) NSString *relation;
 @property (nonatomic, copy) NSDate *created;
 @property (nonatomic, copy) NSString *loc_id;
@@ -34,9 +34,9 @@
 @interface DoubanSimpleUser : DoubanBaseModel
 
 @property (nonatomic, copy) NSString *description;
-@property (nonatomic, copy) NSString *iid;
-@property (nonatomic, copy) NSString *large_avatar;
-@property (nonatomic, copy) NSString *small_avatar;
+@property (nonatomic, assign) NSUInteger iid;
+@property (nonatomic, strong) NSURL *large_avatar;
+@property (nonatomic, strong) NSURL *small_avatar;
 @property (nonatomic, copy) NSString *screen_name;
 @property (nonatomic, copy) NSString *type;
 @property (nonatomic, copy) NSString *uid;

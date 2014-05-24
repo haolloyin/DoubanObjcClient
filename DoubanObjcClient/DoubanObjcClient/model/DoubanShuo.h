@@ -12,7 +12,7 @@
 
 @interface DoubanShuo : DoubanBaseModel
 
-@property (nonatomic, copy) NSString *iid;
+@property (nonatomic, assign) NSUInteger iid;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic, copy) NSString *text;
 @property (nonatomic, assign) NSUInteger reshared_count;
@@ -22,8 +22,10 @@
 @property (nonatomic) BOOL liked;
 @property (nonatomic, strong) NSDate *createdAt;
 @property (nonatomic, strong) DoubanSimpleUser *user;
-@property (nonatomic, strong) DoubanShuo *reshared_status; // 转播的广播对象，这个属性只有在当前广播是一条转播的条件下才会有
+@property (nonatomic, strong) DoubanShuo *resharedStatus; // 转播的广播对象，这个属性只有在当前广播是一条转播的条件下才会有
 
-+ (instancetype)statusesWithId:(NSUInteger )id;
++ (DoubanShuo *)statuses_withId:(NSUInteger)iid;
+
++ (NSArray *)user_timeline_withUserIdOrName:(NSString *)user since:(NSUInteger)since until:(NSUInteger)until;
 
 @end

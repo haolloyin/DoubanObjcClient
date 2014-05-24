@@ -11,6 +11,8 @@
 
 @implementation DoubanShuo
 
+#pragma mark - Mantle
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
         @"iid": @"id",
@@ -23,7 +25,7 @@
         @"liked": @"liked",
         @"createdAt": @"created_at",
         @"user": @"user",
-        @"reshared_status": @"reshared_status"
+        @"resharedStatus": @"reshared_status"
     };
 }
 
@@ -35,23 +37,76 @@
     }];
 }
 
-+ (instancetype)statusesWithId:(NSUInteger )id
++ (NSValueTransformer *)userJSONTransformer {
+    return [MTLValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[DoubanSimpleUser class]];
+}
+
++ (NSValueTransformer *)resharedStatusJSONTransformer {
+    return [MTLValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[DoubanShuo class]];
+}
+
+
+#pragma mark - Douban API
+
++ (DoubanShuo *)statuses_withId:(NSUInteger)iid;
 {
     DouApiClient *client     = [DouApiClient sharedInstance];
     __block DoubanShuo *shuo = nil;
     
     DouReqBlock callback = ^(NSData *data) {
+        NSError *error     = nil;
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:1 error:nil];
-        
-        NSError *error = nil;
-        shuo = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
+        shuo               = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
         
         NSLog(@"shuo: %@", shuo);
     };
     
-    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/%d", id];
+    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/%d", iid];
     [client get:url withCompletionBlock:callback];
+    
     return shuo;
 }
 
++ (NSArray *)user_timeline_withUserIdOrName:(NSString *)user since:(NSUInteger)since until:(NSUInteger)until
+{
+    DouApiClient *client              = [DouApiClient sharedInstance];
+    __block NSMutableArray *timelines = [[NSMutableArray alloc] init];
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:1 error:nil];
+        
+        [arr enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
+            NSError *error   = nil;
+            DoubanShuo *shuo = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
+            [timelines addObject:shuo];
+        }];
+    };
+    
+    NSUInteger min_id = 0;
+    NSUInteger max_id = INT_MAX;
+    if (since > 0) {
+        min_id = since;
+    }
+    if (until > 0) {
+        max_id = until;
+    }
+    
+    NSMutableString *url = [NSMutableString
+                            stringWithFormat:@"shuo/v2/statuses/user_timeline/%@?since_id=%d&until_id=%d",
+                            user, min_id, max_id];
+    [client get:url withCompletionBlock:callback];
+    
+    return [timelines copy];
+}
+
 @end
+
+
+
+
+
+
+
+
+
+

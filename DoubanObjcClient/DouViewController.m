@@ -96,7 +96,9 @@
 //    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/home_timeline", nil];
 //    [client httpsGet:url withCompletionBlock:callbackBlock];
     
-    [DoubanShuo statusesWithId:1394467451]; // 测试获取一条广播
+//    [DoubanShuo statusesWithId:1369251451]; // 测试获取一条广播
+//    [DoubanShuo statusesWithId:1403330980]; // 获取一条转播
+    [DoubanShuo user_timeline_withUserIdOrName:@"haolloyin" since:0 until:0];
 }
 
 - (IBAction)testDeleteRequest:(id)sender {

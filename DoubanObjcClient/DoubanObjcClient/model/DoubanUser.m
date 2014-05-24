@@ -10,6 +10,8 @@
 
 @implementation DoubanUser
 
+#pragma mark - Mantle
+
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
         @"iid": @"id",
@@ -34,6 +36,14 @@
     }];
 }
 
++ (NSValueTransformer *)avatarJSONTransformer {
+    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+}
+
++ (NSValueTransformer *)altJSONTransformer {
+    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+}
+
 @end
 
 @implementation DoubanSimpleUser
@@ -56,6 +66,14 @@
     } reverseBlock:^(NSDate *date) {
         return [self.dateFormatter stringFromDate:date];
     }];
+}
+
++ (NSValueTransformer *)large_avatarJSONTransformer {
+    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+}
+
++ (NSValueTransformer *)small_avatarJSONTransformer {
+    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
 }
 
 @end
