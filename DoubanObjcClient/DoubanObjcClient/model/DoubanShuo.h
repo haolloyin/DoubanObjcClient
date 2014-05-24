@@ -28,4 +28,17 @@
 
 + (NSArray *)user_timeline_withUserIdOrName:(NSString *)user since:(NSUInteger)since until:(NSUInteger)until;
 
++ (NSArray *)home_timeline_withSince:(NSUInteger)since until:(NSUInteger)until count:(NSUInteger)count start:(NSUInteger)start;
+
+/**
+ *  获取指定一条广播的评论列表
+ *
+ *  @param iid   广播的 id
+ *  @param start 从 0 逐渐增大，越小表示评论得越早（文档没指明，通过测试验证的）
+ *  @param count 指获取的评论条数，官方默认是 20条
+ *
+ *  @return 多条评论的集合，和广播是一样的结构体
+ */
++ (NSArray *)statuses_comments_withId:(NSUInteger)iid start:(NSUInteger)start count:(NSUInteger)count;
+
 @end

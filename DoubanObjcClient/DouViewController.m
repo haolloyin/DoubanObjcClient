@@ -98,7 +98,9 @@
     
 //    [DoubanShuo statusesWithId:1369251451]; // 测试获取一条广播
 //    [DoubanShuo statusesWithId:1403330980]; // 获取一条转播
-    [DoubanShuo user_timeline_withUserIdOrName:@"haolloyin" since:0 until:0];
+//    [DoubanShuo user_timeline_withUserIdOrName:@"haolloyin" since:0 until:0];
+//    [DoubanShuo home_timeline_withSince:1397704049 until:0 count:4 start:0];
+    [DoubanShuo statuses_comments_withId:1402640365 start:1390823405 count:2];
 }
 
 - (IBAction)testDeleteRequest:(id)sender {
