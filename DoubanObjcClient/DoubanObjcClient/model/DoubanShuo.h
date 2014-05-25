@@ -24,7 +24,16 @@
 @property (nonatomic, strong) DoubanSimpleUser *user;
 @property (nonatomic, strong) DoubanShuo *resharedStatus; // 转播的广播对象，这个属性只有在当前广播是一条转播的条件下才会有
 
-+ (DoubanShuo *)statuses_withId:(NSUInteger)iid;
++ (DoubanShuo *)statuses_withId:(NSUInteger)iid needPacked:(BOOL)needPacked;
+
+/**
+ *  删除一条广播
+ *
+ *  @param iid <#iid description#>
+ *
+ *  @return <#return value description#>
+ */
++ (DoubanShuo *)delete_statuses_withId:(NSUInteger)iid;
 
 + (NSArray *)user_timeline_withUserIdOrName:(NSString *)user since:(NSUInteger)since until:(NSUInteger)until;
 
@@ -40,5 +49,37 @@
  *  @return 多条评论的集合，和广播是一样的结构体
  */
 + (NSArray *)statuses_comments_withId:(NSUInteger)iid start:(NSUInteger)start count:(NSUInteger)count;
+
+/**
+ *  赞一条广播
+ *
+ *  @param idd <#idd description#>
+ */
++ (DoubanShuo *)statuses_like_withId:(NSUInteger)iid;
+
+/**
+ *  转播一条广播
+ *
+ *  @param iid <#iid description#>
+ *
+ *  @return <#return value description#>
+ */
++ (DoubanShuo *)statuses_reshare_withId:(NSUInteger)iid;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 @end

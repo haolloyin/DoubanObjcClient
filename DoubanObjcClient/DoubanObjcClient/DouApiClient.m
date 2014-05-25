@@ -210,53 +210,66 @@
 
 #pragma mark - Douban API with block
 
+/**
+ *  简单封装通用的请求
+ *
+ *  @param subPath <#subPath description#>
+ *  @param method  <#method description#>
+ *  @param type    <#type description#>
+ */
+- (void)requestWithSubPath:(NSString *)subPath
+                    method:(DouRequestMethod)method
+               requestType:(DouRequestType)requestType
+                      data:(NSDictionary *)dict
+           completionBlock:(DouReqBlock)reqBlock
+{
+    NSError *error               = nil;
+    NSString *baseURL            = (requestType == DouHTTP) ? kHttpApiBaseUrl : kHttpsApiBaseUrl;
+    NSString *methodStr          = (method == DouRequestGET) ? @"GET" : ((method == DouRequestPOST) ? @"POST" : @"DELETE");
+    NSURL *url                   = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, subPath]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    
+    [request setHTTPMethod:methodStr];
+    
+    if (requestType == DouHTTPS) {
+        [request setAllHTTPHeaderFields:@{@"Authorization": [NSString stringWithFormat:@"Bearer %@", [self accessToken]]}];
+    }
+    
+    if (method == DouRequestPOST && dict) {
+        NSData *postData = [NSKeyedArchiver archivedDataWithRootObject:dict];
+        [request setHTTPBody:postData];
+    }
+    
+    NSHTTPURLResponse *resp         = nil;
+    NSData *respData            = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error];
+    
+    NSString *respString = [[NSString alloc] initWithData:respData encoding:NSUTF8StringEncoding];
+    NSLog(@"\n\nrespString:\n%@\n\n", respString);
+    
+    if ([resp statusCode] == 200) {
+        reqBlock(respData); // 回调
+    }
+}
+
 - (void)get:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock
 {
-    NSString *urlStr             = [NSString stringWithFormat:@"%@%@", kHttpApiBaseUrl, subPath];
-    NSURL *URL                   = [NSURL URLWithString:urlStr];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-    
-    NSLog(@"url: %@", urlStr);
-    [request setHTTPMethod:@"GET"];
-    
-    NSURLResponse *resp;
-    NSError *error;
-    NSData *data                = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error];
-    NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *)resp;
-    
-    NSString *respString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"respString:\n%@", respString);
-    
-    if ([httpResp statusCode] == 200) {
-        reqBlock(data); // 回调
-    }
+    [self requestWithSubPath:subPath method:DouRequestGET requestType:DouHTTP data:nil completionBlock:reqBlock];
 }
 
 - (void)httpsGet:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock
 {
-    NSString *urlStr             = [NSString stringWithFormat:@"%@%@", kHttpsApiBaseUrl, subPath];
-    NSURL *URL                   = [NSURL URLWithString:urlStr];
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
-    
-    NSLog(@"url: %@", urlStr);
-    [request setHTTPMethod:@"GET"];
-    [request setAllHTTPHeaderFields:@{@"Authorization": [NSString stringWithFormat:@"Bearer %@", [self accessToken]]}];
-    
-    NSURLResponse *resp;
-    NSError *error;
-    NSData *data                = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error];
-    NSHTTPURLResponse *httpResp = (NSHTTPURLResponse *)resp;
-    
-    NSString *respString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-    NSLog(@"respString:\n%@", respString);
-    
-    if ([httpResp statusCode] == 200) {
-        reqBlock(data); // 回调
-    }
+    [self requestWithSubPath:subPath method:DouRequestGET requestType:DouHTTPS data:nil completionBlock:reqBlock];
 }
 
+- (void)httpsPost:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock
+{
+    [self requestWithSubPath:subPath method:DouRequestPOST requestType:DouHTTPS data:nil completionBlock:reqBlock];
+}
 
-
+- (void)httpsDelete:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock
+{
+    [self requestWithSubPath:subPath method:DouRequestDELETE requestType:DouHTTPS data:nil completionBlock:reqBlock];
+}
 
 
 

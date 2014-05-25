@@ -10,6 +10,38 @@
 
 typedef void (^DouReqBlock)(NSData *); // 专门用于返回 API 请求响应结果
 
+/**
+ *  HTTP/HTTPS 请求的 method
+ */
+typedef NS_ENUM(NSUInteger, DouRequestMethod) {
+    /**
+     *  <#Description#>
+     */
+    DouRequestGET,
+    /**
+     *  <#Description#>
+     */
+    DouRequestPOST,
+    /**
+     *  <#Description#>
+     */
+    DouRequestDELETE
+};
+
+/**
+ *  HTTP 与 HTTPS
+ */
+typedef NS_ENUM(NSUInteger, DouRequestType) {
+    /**
+     *  <#Description#>
+     */
+    DouHTTP,
+    /**
+     *  <#Description#>
+     */
+    DouHTTPS
+};
+
 @class DouApiClient;
 
 @protocol DouOAuthServiceDelegate <NSObject>
@@ -46,9 +78,29 @@ typedef void (^DouReqBlock)(NSData *); // 专门用于返回 API 请求响应结
 
 #pragma mark - Douban API with block
 
+- (void)get:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock;
+
 - (void)httpsGet:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock;
 
-- (void)get:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock;
+- (void)httpsPost:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock;
+
+- (void)httpsDelete:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end

@@ -48,21 +48,53 @@
 
 #pragma mark - Douban API
 
-+ (DoubanShuo *)statuses_withId:(NSUInteger)iid;
+/**
+ *  获取一条广播，needPacked 表示是否打包 resharers 和 comments 数据
+ *
+ *  @param iid        <#iid description#>
+ *  @param needPacked 是否打包 resharers 和 comments 数据
+ *
+ *  @return <#return value description#>
+ */
++ (DoubanShuo *)statuses_withId:(NSUInteger)iid needPacked:(BOOL)needPacked;
 {
     DouApiClient *client     = [DouApiClient sharedInstance];
     __block DoubanShuo *shuo = nil;
     
     DouReqBlock callback = ^(NSData *data) {
         NSError *error     = nil;
-        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:1 error:nil];
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
         shuo               = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
-        
-        NSLog(@"shuo: %@", shuo);
+    };
+    
+    //TODO 当 pack=true 时，返回的 JSON 包含 resharers、like、comments，更复杂了，需要更新 DoubanShuo 模型
+    NSString *para = (needPacked) ? @"?pack=true" : @"";
+    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/%d%@", iid, para];
+    [client get:url withCompletionBlock:callback];
+    
+    return shuo;
+}
+
+/**
+ *  删除一条广播
+ *
+ *  @param iid <#iid description#>
+ *
+ *  @return <#return value description#>
+ */
++ (DoubanShuo *)delete_statuses_withId:(NSUInteger)iid
+{
+    DouApiClient *client     = [DouApiClient sharedInstance];
+    __block DoubanShuo *shuo = nil;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error     = nil;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+        shuo               = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
     };
     
     NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/%d", iid];
-    [client get:url withCompletionBlock:callback];
+    [client httpsDelete:url withCompletionBlock:callback];
     
     return shuo;
 }
@@ -145,10 +177,39 @@
     return [comments copy];
 }
 
++ (DoubanShuo *)statuses_like_withId:(NSUInteger)iid
+{
+    DouApiClient *client     = [DouApiClient sharedInstance];
+    __block DoubanShuo *shuo = nil;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error     = nil;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+        shuo               = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
+    };
+    
+    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/%d/like", iid];
+    [client httpsPost:url withCompletionBlock:callback];
+    
+    return shuo;
+}
 
-
-
-
++ (DoubanShuo *)statuses_reshare_withId:(NSUInteger)iid
+{
+    DouApiClient *client     = [DouApiClient sharedInstance];
+    __block DoubanShuo *shuo = nil;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error     = nil;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+        shuo               = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
+    };
+    
+    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/%d/reshare", iid];
+    [client httpsPost:url withCompletionBlock:callback];
+    
+    return shuo;
+}
 
 
 
