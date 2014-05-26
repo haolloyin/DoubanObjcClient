@@ -1,5 +1,5 @@
 //
-//  DouOAuthService.h
+//  DoubanObjcClient.h
 //  DoubanObjcClient
 //
 //  Created by hao on 5/18/14.
@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "DouApiDefines.h"
 
 typedef void (^DouReqBlock)(NSData *); // 专门用于返回 API 请求响应结果
 
@@ -86,7 +87,7 @@ typedef NS_ENUM(NSUInteger, DouRequestType) {
 
 - (void)httpsDelete:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock;
 
-
+- (void)httpsPost:(NSString *)subPath withDict:(NSDictionary *)postDict completionBlock:(DouReqBlock)callback；
 
 
 
