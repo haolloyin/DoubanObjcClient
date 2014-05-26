@@ -87,7 +87,7 @@ typedef NS_ENUM(NSUInteger, DouRequestType) {
 
 - (void)httpsDelete:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock;
 
-- (void)httpsPost:(NSString *)subPath withDict:(NSDictionary *)postDict completionBlock:(DouReqBlock)callback；
+- (void)httpsPost:(NSString *)subPath withDict:(NSDictionary *)postDict completionBlock:(DouReqBlock)callback;
 
 
 
