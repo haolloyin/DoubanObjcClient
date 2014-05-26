@@ -66,8 +66,15 @@
  */
 + (DoubanShuo *)statuses_reshare_withId:(NSUInteger)iid;
 
-
-
+/**
+ *  发送一条广播
+ *
+ *  @param text      文字描述
+ *  @param imageData 如果广播带图片，该参数不为 nil，否则为 nil，表示不上传图片
+ *
+ *  @return <#return value description#>
+ */
++ (DoubanShuo *)post_statuses_withText:(NSString *)text image:(NSData *)imageData;
 
 
 

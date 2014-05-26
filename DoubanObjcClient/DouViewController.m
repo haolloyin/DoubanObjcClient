@@ -105,6 +105,18 @@
 //    [DoubanShuo statuses_like_withId:1402640365];
 //    [DoubanShuo statuses_reshare_withId:1402640365];
 //    [DoubanShuo delete_statuses_withId:1404392507];
+    
+//    [DoubanShuo post_statuses_withText:@"just test." image:nil]; // error
+    
+//    [DoubanUser get_user_withName:@"ahbei"];
+//    [DoubanUser current_user];
+//    [DoubanUser search_user_withText:@"hao" start_id:0 count:3];
+//    [DoubanUser user_following_withUserId:1000001 start_id:0 count:100];
+//    [DoubanUser user_followers_withUserId:1000001 start_id:1 count:33];
+//    [DoubanUser follow_in_common_withUserId:1000001 start_id:0 count:10]; // error
+//    [DoubanUser following_followers_of_withUserId:1000001 start_id:0 count:10];
+    
+    [DoubanUser block_user_withUserId:1000001];
 }
 
 - (IBAction)testDeleteRequest:(id)sender {

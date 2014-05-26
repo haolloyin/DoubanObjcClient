@@ -270,7 +270,7 @@
     [self requestWithSubPath:subPath method:DouRequestDELETE requestType:DouHTTPS data:nil completionBlock:reqBlock];
 }
 
-- (void)httpsPost:(NSString *)subPath withDict:(NSDictionary *)postDict completionBlock:(DouReqBlock)callback
+- (void)httpsPost:(NSString *)subPath withDict:(NSDictionary *)postDict completionBlock:(DouReqBlock)reqBlock
 {
     NSError *error               = nil;
     NSURL *url                   = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kHttpsApiBaseUrl, subPath]];
