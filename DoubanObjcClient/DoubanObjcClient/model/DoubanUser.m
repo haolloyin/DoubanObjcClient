@@ -102,19 +102,161 @@
     NSString *url = [NSString stringWithFormat:@"v2/user?q=%@&start=%d&count=%d", text, start, icount];
     [client httpsGet:url withCompletionBlock:callback];
     
-    return users;
+    return [users copy];
 }
 
++ (NSArray *)user_following_withUserId:(NSString *)uid start_id:(NSUInteger)start_id count:(NSUInteger)count
+{
+    DouApiClient *client          = [DouApiClient sharedInstance];
+    __block NSMutableArray *users = nil;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error = nil;
+        NSArray *arr  = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+        
+        [arr enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL *stop) {
+            DoubanUser *user = [MTLJSONAdapter modelOfClass:DoubanUser.class fromJSONDictionary:dic error:&error];
+            [users addObject:user];
+        }];
+    };
+    
+    NSUInteger start  = (start_id > 0) ? start_id : 0;
+    NSUInteger icount = (count > 0) ? count : 20;
+    
+    NSString *url = [NSString stringWithFormat:@"shuo/v2/users/%d/following?start=%d&count=%d", uid, start, icount];
+    [client get:url withCompletionBlock:callback];
+    
+    return [users copy];
+}
 
++ (NSArray *)user_followers_withUserId:(NSString *)uid start_id:(NSUInteger)start_id count:(NSUInteger)count
+{
+    DouApiClient *client          = [DouApiClient sharedInstance];
+    __block NSMutableArray *users = nil;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error = nil;
+        NSArray *arr   = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+        
+        [arr enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL *stop) {
+            DoubanUser *user = [MTLJSONAdapter modelOfClass:DoubanUser.class fromJSONDictionary:dic error:&error];
+            [users addObject:user];
+        }];
+    };
+    
+    NSUInteger start  = (start_id > 0) ? start_id : 0;
+    NSUInteger icount = (count > 0) ? count : 20;
+    
+    NSString *url = [NSString stringWithFormat:@"shuo/v2/users/%d/followers?start=%d&count=%d", uid, start, icount];
+    [client get:url withCompletionBlock:callback];
+    
+    return [users copy];
+}
 
++ (NSArray *)following_followers_of_withUserId:(NSString *)uid start_id:(NSUInteger)start_id count:(NSUInteger)count
+{
+    DouApiClient *client          = [DouApiClient sharedInstance];
+    __block NSMutableArray *users = nil;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error = nil;
+        NSArray *arr   = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+        
+        [arr enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL *stop) {
+            DoubanUser *user = [MTLJSONAdapter modelOfClass:DoubanUser.class fromJSONDictionary:dic error:&error];
+            [users addObject:user];
+        }];
+    };
+    
+    NSUInteger start  = (start_id > 0) ? start_id : 0;
+    NSUInteger icount = (count > 0) ? count : 20;
+    
+    NSString *url = [NSString stringWithFormat:@"shuo/v2/users/%d/following_followers_of?start=%d&count=%d", uid, start, icount];
+    [client httpsGet:url withCompletionBlock:callback];
+    
+    return [users copy];
+}
 
++ (BOOL)block_user_withUserId:(NSString *)uid
+{
+    DouApiClient *client = [DouApiClient sharedInstance];
+    __block BOOL success;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error     = nil;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+        
+        success = (dict[@"r"] == 1) ? YES : NO;
+    };
+    
+    NSString *url = [NSString stringWithFormat:@"shuo/v2/users/%d/block", uid];
+    [client httpsGet:url withCompletionBlock:callback];
+    
+    return success;
+}
 
++ (DoubanUser *)follow_user_withUserId:(NSUInteger)uid
+{
+    DouApiClient *client     = [DouApiClient sharedInstance];
+    __block DoubanUser *user = nil;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error     = nil;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+        user               = [MTLJSONAdapter modelOfClass:DoubanUser.class fromJSONDictionary:dict error:&error];
+    };
+    
+    NSString *user_id      = [NSString stringWithFormt:@"%d", user_id];
+    NSDictionary *postDict = @{@"source": kApiKey, @"user_id": user_id};
+    
+    NSString *url = @"shuo/v2/friendships/create";
+    [client httpsPost:url withDict:postDict completionBlock:callback];
+    
+    return user;
+}
 
++ (DoubanUser *)unfollow_user_withUserId:(NSUInteger)uid
+{
+    DouApiClient *client     = [DouApiClient sharedInstance];
+    __block DoubanUser *user = nil;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error     = nil;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+        user               = [MTLJSONAdapter modelOfClass:DoubanUser.class fromJSONDictionary:dict error:&error];
+    };
+    
+    NSString *user_id      = [NSString stringWithFormt:@"%d", user_id];
+    NSDictionary *postDict = @{@"source": kApiKey, @"user_id": user_id};
+    
+    NSString *url = @"shuo/v2/friendships/destroy";
+    [client httpsPost:url withDict:postDict completionBlock:callback];
+    
+    return user;
+}
 
-
-
++ (NSDictionary *)friendships_betweenSourceUid:(NSUInteger)source_uid targetUid:(NSUInteger)target_uid
+{
+    DouApiClient *client             = [DouApiClient sharedInstance];
+    __block NSDictionary *resultDict = nil;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error = nil;
+        resultDict     = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+    };
+    
+    NSString *source_id    = [NSString stringWithFormt:@"%d", source_uid];
+    NSString *target_id    = [NSString stringWithFormt:@"%d", target_uid];
+    NSDictionary *postDict = @{@"source": kApiKey, @"source_id": source_id, @"target_id": target_id};
+    
+    NSString *url = @"shuo/v2/friendships/show";
+    [client httpsPost:url withDict:postDict completionBlock:callback];
+    
+    return resultDict;
+}
 
 @end
+
 
 
 
