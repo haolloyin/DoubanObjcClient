@@ -26,6 +26,26 @@
 @property (nonatomic, copy) NSString *loc_name;
 @property (nonatomic, copy) NSString *desc;
 
++ (DoubanUser *)get_user_withName:(NSString *)name;
+
++ (DoubanUser *)current_user_withName:(NSString *)name;
+
++ (NSArray *)search_user_withText:(NSString *)text start_id:(NSUInteger)start_id count:(NSUInteger)count;
+
++ (NSArray *)user_following_withUserId:(NSString *)uid start_id:(NSUInteger)start_id count:(NSUInteger)count;
+
++ (NSArray *)user_followers_withUserId:(NSString *)uid start_id:(NSUInteger)start_id count:(NSUInteger)count;
+
++ (NSArray *)following_followers_of_withUserId:(NSString *)uid start_id:(NSUInteger)start_id count:(NSUInteger)count;
+
++ (BOOL)block_user_withUserId:(NSString *)uid;
+
++ (DoubanUser *)follow_user_withUserId:(NSUInteger)uid;
+
++ (DoubanUser *)unfollow_user_withUserId:(NSUInteger)uid;
+
++ (NSDictionary *)friendships_betweenSourceUid:(NSUInteger)source_uid targetUid:(NSUInteger)target_uid;
+
 @end
 
 /**
