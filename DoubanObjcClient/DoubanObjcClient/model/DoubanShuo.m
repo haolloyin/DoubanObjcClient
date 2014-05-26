@@ -211,7 +211,31 @@
     return shuo;
 }
 
-
++ (DoubanShuo *)post_statuses_withText:(NSString *)text image:(NSData *)imageData
+{
+    //TODO 需要判断 text 是否为空，imageData 是否超过 3MB
+    DouApiClient *client     = [DouApiClient sharedInstance];
+    __block DoubanShuo *shuo = nil;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error     = nil;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+        shuo               = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
+    };
+    
+    NSDictionary *postDict = nil;
+    if (imageData) {
+        postDict = @{@"text": text, @"source": kApiKey, @"image": imageData};
+    } 
+    else {
+        postDict = @{@"text": text, @"source": kApiKey};
+    }
+    
+    NSString *url = @"shuo/v2/statuses/";
+    [client httpsPost:url withDict:postDict completionBlock:callback];
+    
+    return shuo;
+}
 
 
 
