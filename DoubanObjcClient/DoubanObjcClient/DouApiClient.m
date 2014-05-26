@@ -1,5 +1,5 @@
 //
-//  DouOAuthService.m
+//  DoubanObjcClient.m
 //  DoubanObjcClient
 //
 //  Created by hao on 5/18/14.
@@ -7,7 +7,6 @@
 //
 
 #import "DouApiClient.h"
-#import "DouApiDefines.h"
 
 @implementation DouApiClient
 
@@ -271,7 +270,31 @@
     [self requestWithSubPath:subPath method:DouRequestDELETE requestType:DouHTTPS data:nil completionBlock:reqBlock];
 }
 
-
+- (void)httpsPost:(NSString *)subPath withDict:(NSDictionary *)postDict completionBlock:(DouReqBlock)callback
+{
+    NSError *error               = nil;
+    NSURL *url                   = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", kHttpsApiBaseUrl, subPath]];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
+    NSString *authHeader         = [NSString stringWithFormat:@"Bearer %@", [self accessToken]];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setAllHTTPHeaderFields:@{@"Authorization": authHeader, @"Content-Type": @"multipart/form-data"}];
+    
+    if (postDict) {
+        NSData *postData = [NSKeyedArchiver archivedDataWithRootObject:postDict];
+        [request setHTTPBody:postData];
+    }
+    
+    NSHTTPURLResponse *resp         = nil;
+    NSData *respData            = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error];
+    
+    NSString *respString = [[NSString alloc] initWithData:respData encoding:NSUTF8StringEncoding];
+    NSLog(@"\n\nrespString:\n%@\n\n", respString);
+    
+    if ([resp statusCode] == 200) {
+        reqBlock(respData); // 回调
+    }
+}
 
 
 
