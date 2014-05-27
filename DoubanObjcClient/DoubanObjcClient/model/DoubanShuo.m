@@ -241,7 +241,30 @@
     return shuo;
 }
 
-
++ (DoubanShuo *)post_statuses_withText:(NSString *)text
+                             rec_title:(NSString *)rec_title
+                               rec_url:(NSString *)rec_url
+                              rec_desc:(NSString *)rec_desc
+                             rec_image:(NSString *)rec_image
+{
+    DouApiClient *client     = [DouApiClient sharedInstance];
+    __block DoubanShuo *shuo = nil;
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSError *error     = nil;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:1 error:&error];
+        shuo               = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
+    };
+    
+    NSDictionary *postDict = @{@"text": text, @"source": kApiKey,
+                               @"rec_title": rec_title, @"rec_url": rec_url,
+                               @"rec_desc": rec_desc, @"rec_image": rec_image};
+    NSString *url          = @"shuo/v2/statuses/";
+    
+    [client httpsPost:url withDict:postDict completionBlock:callback];
+    
+    return shuo;
+}
 
 
 

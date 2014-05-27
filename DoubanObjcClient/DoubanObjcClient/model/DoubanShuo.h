@@ -76,7 +76,22 @@
  */
 + (DoubanShuo *)post_statuses_withText:(NSString *)text image:(NSData *)imageData;
 
-
+/**
+ *  发送一条推荐网址的广播
+ *
+ *  @param text      <#text description#>
+ *  @param rec_title 推荐网址的标题
+ *  @param rec_url   推荐网址的href
+ *  @param rec_desc  推荐网址的描述
+ *  @param rec_image 推荐网址的附图url
+ *
+ *  @return <#return value description#>
+ */
++ (DoubanShuo *)post_statuses_withText:(NSString *)text
+                             rec_title:(NSString *)rec_title
+                               rec_url:(NSString *)rec_url
+                              rec_desc:(NSString *)rec_desc
+                             rec_image:(NSString *)rec_image;
 
 
 

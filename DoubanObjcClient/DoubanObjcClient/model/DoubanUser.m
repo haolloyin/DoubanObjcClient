@@ -181,29 +181,29 @@
  *
  *  @return <#return value description#>
  */
-//+ (NSArray *)follow_in_common_withUserId:(NSUInteger)uid start_id:(NSUInteger)start_id count:(NSUInteger)count
-//{
-//    DouApiClient *client          = [DouApiClient sharedInstance];
-//    __block NSMutableArray *users = [[NSMutableArray alloc] init];
-//    
-//    DouReqBlock callback = ^(NSData *data) {
-//        NSArray *arr   = [NSJSONSerialization JSONObjectWithData:data options:1 error:nil];
-//        
-//        [arr enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL *stop) {
-//            NSError *error   = nil;
-//            DoubanUser *user = [MTLJSONAdapter modelOfClass:DoubanUser.class fromJSONDictionary:dic error:&error];
-//            [users addObject:user];
-//        }];
-//    };
-//    
-//    NSUInteger start  = (start_id > 0) ? start_id : 0;
-//    NSUInteger icount = (count > 0) ? count : 20;
-//    
-//    NSString *url = [NSString stringWithFormat:@"shuo/v2/users/%d/follow_in_common?start=%d&count=%d", uid, start, icount];
-//    [client httpsGet:url withCompletionBlock:callback];
-//    
-//    return [users copy];
-//}
++ (NSArray *)follow_in_common_withUserId:(NSUInteger)uid start_id:(NSUInteger)start_id count:(NSUInteger)count
+{
+    DouApiClient *client          = [DouApiClient sharedInstance];
+    __block NSMutableArray *users = [[NSMutableArray alloc] init];
+    
+    DouReqBlock callback = ^(NSData *data) {
+        NSArray *arr   = [NSJSONSerialization JSONObjectWithData:data options:1 error:nil];
+        
+        [arr enumerateObjectsUsingBlock:^(NSDictionary *dic, NSUInteger idx, BOOL *stop) {
+            NSError *error   = nil;
+            DoubanUser *user = [MTLJSONAdapter modelOfClass:DoubanUser.class fromJSONDictionary:dic error:&error];
+            [users addObject:user];
+        }];
+    };
+    
+    NSUInteger start  = (start_id > 0) ? start_id : 0;
+    NSUInteger icount = (count > 0) ? count : 20;
+    
+    NSString *url = [NSString stringWithFormat:@"shuo/v2/users/%d/follow_in_common?start=%d&count=%d", uid, start, icount];
+    [client httpsGet:url withCompletionBlock:callback];
+    
+    return [users copy];
+}
 
 /**
  *  当前用户（指已授权的用户）关注了某指定用户（uid）的哪些关注者（粉丝）

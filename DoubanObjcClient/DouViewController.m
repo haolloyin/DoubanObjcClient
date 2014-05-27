@@ -109,11 +109,17 @@
 //    NSString *text = [NSString stringWithFormat:@"just test. --%@", [NSDate date]];
 //    [DoubanShuo post_statuses_withText:text image:nil]; // 纯文字
     
-    NSString *text = [NSString stringWithFormat:@"just test. --%@", [NSDate date]];
-//    UIImage *image = [UIImage imageNamed:@"image.png"];
-//    NSData *data = UIImagePNGRepresentation(image);
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image" ofType:@"png"]];
-    [DoubanShuo post_statuses_withText:text image:data];
+    // 推荐网址
+//    [DoubanShuo post_statuses_withText:@"测试推荐网址"
+//                             rec_title:@"豆瓣广播 Api V2"
+//                               rec_url:@"http://developers.douban.com/wiki/?title=shuo_v2"
+//                              rec_desc:@"描述啦" rec_image:@"http://img3.douban.com/icon/u45742059-2.jpg"];
+    
+//    NSString *text = [NSString stringWithFormat:@"just test. --%@", [NSDate date]];
+////    UIImage *image = [UIImage imageNamed:@"image.png"];
+////    NSData *data = UIImagePNGRepresentation(image);
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image" ofType:@"png"]];
+//    [DoubanShuo post_statuses_withText:text image:data];
     
 //    [DoubanUser get_user_withName:@"ahbei"];
 //    [DoubanUser current_user];
@@ -123,7 +129,7 @@
 //    [DoubanUser follow_in_common_withUserId:1000001 start_id:0 count:10]; // error
 //    [DoubanUser following_followers_of_withUserId:1000001 start_id:0 count:10];
     
-//    [DoubanUser block_user_withUserId:1000001];
+//    [DoubanUser block_user_withUserId:1000001]; // error
 }
 
 - (IBAction)testDeleteRequest:(id)sender {

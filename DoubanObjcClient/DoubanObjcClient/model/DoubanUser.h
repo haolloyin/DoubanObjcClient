@@ -52,7 +52,7 @@
  *
  *  @return <#return value description#>
  */
-//+ (NSArray *)follow_in_common_withUserId:(NSUInteger)uid start_id:(NSUInteger)start_id count:(NSUInteger)count;
++ (NSArray *)follow_in_common_withUserId:(NSUInteger)uid start_id:(NSUInteger)start_id count:(NSUInteger)count;
 
 /**
  *  获取所给用户（uid）被哪些用户关注，即粉丝
