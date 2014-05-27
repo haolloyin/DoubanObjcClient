@@ -7,6 +7,7 @@
 //
 
 #import "DouApiClient.h"
+#import "STHTTPRequest.h"
 
 @implementation DouApiClient
 
@@ -296,7 +297,39 @@
     }
 }
 
-
+- (void)httpsPost:(NSString *)subPath withDictionary:(NSDictionary *)dict data:(NSData *)data forParameterName:(NSString *)paraName mimeType:(NSString *)mimeType completionBlock:(DouReqBlock)reqBlock
+{
+    NSString *url = [NSString stringWithFormat:@"%@%@", kHttpsApiBaseUrl, subPath];
+    NSString *authHeader = [NSString stringWithFormat:@"Bearer %@", [self accessToken]];
+    __block STHTTPRequest *request = [STHTTPRequest requestWithURLString:url];
+    __weak STHTTPRequest *wr = request;
+    
+    request.POSTDictionary = dict;
+    [request setHeaderWithName:@"Authorization" value:authHeader];
+    
+    if (data) {
+        // 如果 data 不为空才需要上传
+        [request setHeaderWithName:@"Content-Type" value:@"multipart/form-data"];
+        [request addDataToUpload:data parameterName:@"image" mimeType:@"multipart/form-data" fileName:nil];
+    }
+    
+    request.completionBlock = ^(NSDictionary *headers, NSString *body) {
+        if (wr.responseStatus == 200) {
+            NSData *respData = wr.responseData;
+            
+            NSString *respString = [[NSString alloc] initWithData:respData encoding:NSUTF8StringEncoding];
+            NSLog(@"\n\nrespString:\n%@\n\n", respString);
+            
+            reqBlock(respData);
+        }
+    };
+    
+    request.errorBlock = ^(NSError *error) {
+        NSLog(@"post error: %@", error);
+    };
+    
+    [request startSynchronous];
+}
 
 
 
