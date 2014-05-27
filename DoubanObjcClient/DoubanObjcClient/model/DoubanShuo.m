@@ -223,16 +223,20 @@
         shuo               = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
     };
     
-    NSDictionary *postDict = nil;
-    if (imageData) {
-        postDict = @{@"text": text, @"source": kApiKey, @"image": imageData};
-    } 
-    else {
-        postDict = @{@"text": text, @"source": kApiKey};
+    NSDictionary *postDict = @{@"text": text, @"source": kApiKey};
+    NSString *url          = @"shuo/v2/statuses/";
+
+    if (!imageData) {
+        [client httpsPost:url withDict:postDict completionBlock:callback];
     }
-    
-    NSString *url = @"shuo/v2/statuses/";
-    [client httpsPost:url withDict:postDict completionBlock:callback];
+    else {
+        [client httpsPost:url
+           withDictionary:postDict
+                     data:imageData
+         forParameterName:@"image"
+                 mimeType:@"image/png"
+          completionBlock:callback];
+    }
     
     return shuo;
 }

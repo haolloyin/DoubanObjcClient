@@ -106,7 +106,14 @@
 //    [DoubanShuo statuses_reshare_withId:1402640365];
 //    [DoubanShuo delete_statuses_withId:1404392507];
     
-//    [DoubanShuo post_statuses_withText:@"just test." image:nil]; // error
+//    NSString *text = [NSString stringWithFormat:@"just test. --%@", [NSDate date]];
+//    [DoubanShuo post_statuses_withText:text image:nil]; // 纯文字
+    
+    NSString *text = [NSString stringWithFormat:@"just test. --%@", [NSDate date]];
+//    UIImage *image = [UIImage imageNamed:@"image.png"];
+//    NSData *data = UIImagePNGRepresentation(image);
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image" ofType:@"png"]];
+    [DoubanShuo post_statuses_withText:text image:data];
     
 //    [DoubanUser get_user_withName:@"ahbei"];
 //    [DoubanUser current_user];
@@ -116,7 +123,7 @@
 //    [DoubanUser follow_in_common_withUserId:1000001 start_id:0 count:10]; // error
 //    [DoubanUser following_followers_of_withUserId:1000001 start_id:0 count:10];
     
-    [DoubanUser block_user_withUserId:1000001];
+//    [DoubanUser block_user_withUserId:1000001];
 }
 
 - (IBAction)testDeleteRequest:(id)sender {

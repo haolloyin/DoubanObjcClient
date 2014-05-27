@@ -19,6 +19,11 @@
     dispatch_once(&onceToken, ^{
         if (!singleInstance) {
             singleInstance = [[DouApiClient alloc] init];
+            
+            // TODO 仅用于调试 STHTTPRequest 的请求
+            [USER_DEFAULTS setBool:YES forKey:@"STHTTPRequestShowCurlDescription"];
+            [USER_DEFAULTS setBool:YES forKey:@"STHTTPRequestShowDebugDescription"];
+            [USER_DEFAULTS synchronize];
         }
     });
     
@@ -279,17 +284,28 @@
     NSString *authHeader         = [NSString stringWithFormat:@"Bearer %@", [self accessToken]];
     
     [request setHTTPMethod:@"POST"];
-    [request setAllHTTPHeaderFields:@{@"Authorization": authHeader, @"Content-Type": @"multipart/form-data"}];
+    [request setAllHTTPHeaderFields:@{@"Authorization": authHeader}];
     
     if (postDict) {
-        NSData *postData = [NSKeyedArchiver archivedDataWithRootObject:postDict];
-        [request setHTTPBody:postData];
+        NSMutableString *bodyString = [[NSMutableString alloc] init];
+        NSUInteger idx = 0;
+        for (NSString *key in postDict) {
+            NSString *value = postDict[key];
+            if (0 == idx) {
+                [bodyString appendFormat:@"%@=%@", key, value];
+            }
+            else {
+                [bodyString appendFormat:@"&%@=%@", key, value];
+            }
+            idx += 1;
+        }
+        
+        [request setHTTPBody:[bodyString dataUsingEncoding:NSUTF8StringEncoding]];
     }
-    
-    NSHTTPURLResponse *resp         = nil;
-    NSData *respData            = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error];
-    
-    NSString *respString = [[NSString alloc] initWithData:respData encoding:NSUTF8StringEncoding];
+
+    NSHTTPURLResponse *resp = nil;
+    NSData *respData        = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error];
+    NSString *respString    = [[NSString alloc] initWithData:respData encoding:NSUTF8StringEncoding];
     NSLog(@"\n\nrespString:\n%@\n\n", respString);
     
     if ([resp statusCode] == 200) {
@@ -297,38 +313,48 @@
     }
 }
 
-- (void)httpsPost:(NSString *)subPath withDictionary:(NSDictionary *)dict data:(NSData *)data forParameterName:(NSString *)paraName mimeType:(NSString *)mimeType completionBlock:(DouReqBlock)reqBlock
+- (void)httpsPost:(NSString *)subPath
+   withDictionary:(NSDictionary *)dict
+             data:(NSData *)data
+ forParameterName:(NSString *)paraName
+         mimeType:(NSString *)mimeType
+  completionBlock:(DouReqBlock)reqBlock
 {
-    NSString *url = [NSString stringWithFormat:@"%@%@", kHttpsApiBaseUrl, subPath];
-    NSString *authHeader = [NSString stringWithFormat:@"Bearer %@", [self accessToken]];
+    NSString *url                  = [NSString stringWithFormat:@"%@%@", kHttpsApiBaseUrl, subPath];
+    NSString *authHeader           = [NSString stringWithFormat:@"Bearer %@", [self accessToken]];
     __block STHTTPRequest *request = [STHTTPRequest requestWithURLString:url];
-    __weak STHTTPRequest *wr = request;
+    __weak STHTTPRequest *wr       = request;
+//    request.POSTDictionary         = dict;
     
-    request.POSTDictionary = dict;
     [request setHeaderWithName:@"Authorization" value:authHeader];
     
     if (data) {
         // 如果 data 不为空才需要上传
         [request setHeaderWithName:@"Content-Type" value:@"multipart/form-data"];
-        [request addDataToUpload:data parameterName:@"image" mimeType:@"multipart/form-data" fileName:nil];
+        [request addDataToUpload:data parameterName:paraName mimeType:mimeType fileName:nil];
+
+//        [request addDataToUpload:data parameterName:paraName mimeType:mimeType fileName:@"test-douban.jpg"];
+        
+//        NSString *filePath = [BUNDLE pathForResource:@"image" ofType:@"png"];
+//        [request addFileToUpload:filePath parameterName:@"image"];
     }
     
     request.completionBlock = ^(NSDictionary *headers, NSString *body) {
-        if (wr.responseStatus == 200) {
-            NSData *respData = wr.responseData;
-            
-            NSString *respString = [[NSString alloc] initWithData:respData encoding:NSUTF8StringEncoding];
-            NSLog(@"\n\nrespString:\n%@\n\n", respString);
-            
-            reqBlock(respData);
-        }
+        
+        NSData *respData     = wr.responseData;
+        NSString *respString = [[NSString alloc] initWithData:respData encoding:NSUTF8StringEncoding];
+        NSLog(@"\n\nrespString:\n%@\n\n", respString);
+        
+        reqBlock(respData);
     };
     
     request.errorBlock = ^(NSError *error) {
         NSLog(@"post error: %@", error);
     };
     
-    [request startSynchronous];
+    [request startAsynchronous];
+//    NSString *respBody = [request startSynchronousWithError:nil];
+//    NSLog(@"respBody: %@", respBody);
 }
 
 

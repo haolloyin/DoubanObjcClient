@@ -89,7 +89,12 @@ typedef NS_ENUM(NSUInteger, DouRequestType) {
 
 - (void)httpsPost:(NSString *)subPath withDict:(NSDictionary *)postDict completionBlock:(DouReqBlock)reqBlock;
 
-
+- (void)httpsPost:(NSString *)subPath
+   withDictionary:(NSDictionary *)dict
+             data:(NSData *)data
+ forParameterName:(NSString *)paraName
+         mimeType:(NSString *)mimeType
+  completionBlock:(DouReqBlock)reqBlock;
 
 
 
