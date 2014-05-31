@@ -115,11 +115,11 @@
 //                               rec_url:@"http://developers.douban.com/wiki/?title=shuo_v2"
 //                              rec_desc:@"描述啦" rec_image:@"http://img3.douban.com/icon/u45742059-2.jpg"];
     
-//    NSString *text = [NSString stringWithFormat:@"just test. --%@", [NSDate date]];
+    NSString *text = [NSString stringWithFormat:@"just test. --%@", [NSDate date]];
 ////    UIImage *image = [UIImage imageNamed:@"image.png"];
 ////    NSData *data = UIImagePNGRepresentation(image);
-//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image" ofType:@"png"]];
-//    [DoubanShuo post_statuses_withText:text image:data];
+    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image" ofType:@"png"]];
+    [DoubanShuo post_statuses_withText:text image:data];
     
 //    [DoubanUser get_user_withName:@"ahbei"];
 //    [DoubanUser current_user];

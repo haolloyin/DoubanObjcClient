@@ -435,6 +435,11 @@ static NSMutableArray *localCookiesStorage = nil;
         [request setValue:[NSString stringWithFormat:@"%u", (unsigned int)[body length]] forHTTPHeaderField:@"Content-Length"];
         [request setHTTPBody:body];
         
+        //TODO hao for debug
+//        NSString *bodyStringDebug = [[NSString alloc] initWithData:body encoding:NSUTF8StringEncoding];
+        NSString *bodyStringDebug = [[NSString alloc] initWithData:body encoding:NSASCIIStringEncoding];
+        NSLog(@"post_body_string_Debug:\n%@\n\n", bodyStringDebug);
+        
     } else if (_rawPOSTData) {
         
         if([request HTTPMethod] == nil) [request setHTTPMethod:@"POST"];
@@ -796,6 +801,37 @@ static NSMutableArray *localCookiesStorage = nil;
     NSURLRequest *request = [self requestByAddingCredentialsToURL:_addCredentialsToURL];
     
     NSURLResponse *urlResponse = nil;
+    
+    /**/
+    
+    BOOL showDebugDescription = [[NSUserDefaults standardUserDefaults] boolForKey:@"STHTTPRequestShowDebugDescription"];
+    BOOL showCurlDescription = [[NSUserDefaults standardUserDefaults] boolForKey:@"STHTTPRequestShowCurlDescription"];
+    
+    NSMutableString *logString = nil;
+    
+    if(showDebugDescription || showCurlDescription) {
+        logString = [NSMutableString stringWithString:@"\n----------\n"];
+    }
+    
+    if(showDebugDescription) {
+        [logString appendString:[self debugDescription]];
+    }
+    
+    if(showDebugDescription && showCurlDescription) {
+        [logString appendString:@"\n"];
+    }
+    
+    if(showCurlDescription) {
+        [logString appendString:[self curlDescription]];
+    }
+    
+    if(showDebugDescription || showCurlDescription) {
+        [logString appendString:@"\n----------\n"];
+    }
+    
+    if(logString) NSLog(@"%@", logString);
+    
+    /**/
     
     NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:&urlResponse error:e];
     if(data == nil) return nil;

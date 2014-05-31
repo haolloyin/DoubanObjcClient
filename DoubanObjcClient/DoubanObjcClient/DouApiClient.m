@@ -306,6 +306,7 @@
     NSHTTPURLResponse *resp = nil;
     NSData *respData        = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error];
     NSString *respString    = [[NSString alloc] initWithData:respData encoding:NSUTF8StringEncoding];
+    NSLog(@"\n\nresp body:\n%@\n\n", request.HTTPBody);
     NSLog(@"\n\nrespString:\n%@\n\n", respString);
     
     if ([resp statusCode] == 200) {
@@ -322,40 +323,64 @@
 {
     NSString *url                  = [NSString stringWithFormat:@"%@%@", kHttpsApiBaseUrl, subPath];
     NSString *authHeader           = [NSString stringWithFormat:@"Bearer %@", [self accessToken]];
-    __block STHTTPRequest *request = [STHTTPRequest requestWithURLString:url];
-    __weak STHTTPRequest *wr       = request;
-//    request.POSTDictionary         = dict;
+    NSString *boundary             = @"_0xDoubanObjcClient-BoUnDaRy_";
+    NSString *headerContentType    = [NSString stringWithFormat:@"multipart/form-data; boundary=%@", boundary];
+    NSMutableDictionary * postDict = [[NSMutableDictionary alloc] init];
+    NSMutableURLRequest *request   = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
     
-    [request setHeaderWithName:@"Authorization" value:authHeader];
+    NSMutableString *kvBody   = [[NSMutableString alloc] init]; // k-v 格式的参数
+    NSMutableString *dataBody = [[NSMutableString alloc] init]; // 二进制的参数，如图片
+    NSMutableData *bodyData   = [[NSMutableData alloc] init];   // 完整的 POST body
     
-    if (data) {
-        // 如果 data 不为空才需要上传
-        [request setHeaderWithName:@"Content-Type" value:@"multipart/form-data"];
-        [request addDataToUpload:data parameterName:paraName mimeType:mimeType fileName:nil];
+    // 遍历所有 k-v 文本的提交参数
+    [dict enumerateKeysAndObjectsUsingBlock:^(NSString *k, NSString *v, BOOL *stop) {
+        [kvBody appendFormat:@"--%@\r\nContent-Disposition: form-data; name=\"%@\"\r\n\r\n%@\r\n", boundary, k, v];
+    }];
+    [bodyData appendData:[kvBody dataUsingEncoding:NSASCIIStringEncoding]];
+    
+    // 处理二进制的提交参数
+    [dataBody appendFormat:@"--%@\r\nContent-Disposition: form-data; name=\"image\"\r\n", boundary];
+    [dataBody appendFormat:@"Content-type: %@\r\nContent-Transfer-Encoding: binary\r\n\r\n", mimeType];
+    
+    [bodyData appendData:[dataBody dataUsingEncoding:NSASCIIStringEncoding]];
+    [bodyData appendData:data]; // 添加原始的二进制
+    
+    NSString *endBoundary = [NSString stringWithFormat:@"\r\n--%@--", boundary];
+    [bodyData appendData:[endBoundary dataUsingEncoding:NSASCIIStringEncoding]];
+    
+    NSLog(@"POST body:\n%@\n\n", [[NSString alloc] initWithData:bodyData encoding:NSASCIIStringEncoding]);
 
-//        [request addDataToUpload:data parameterName:paraName mimeType:mimeType fileName:@"test-douban.jpg"];
-        
-//        NSString *filePath = [BUNDLE pathForResource:@"image" ofType:@"png"];
-//        [request addFileToUpload:filePath parameterName:@"image"];
+    // 添加头部信息
+    [postDict setValue:authHeader forKeyPath:@"Authorization"];
+    [postDict setObject:headerContentType forKey:@"Content-Type"];
+    [postDict setObject:@"Content-Length" forKey:[NSString stringWithFormat:@"%u", [bodyData length]]];
+    
+    [request setHTTPMethod:@"POST"];
+    [request setAllHTTPHeaderFields:postDict];
+    [request setHTTPBody:bodyData];
+ 
+    NSHTTPURLResponse *resp = nil;
+    NSError *error          = nil;
+    NSData *respData        = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error]; // 同步请求
+    NSString *respString    = [[NSString alloc] initWithData:respData encoding:NSASCIIStringEncoding];
+
+    NSLog(@"\n\nhttp header:\n%@\n\n", request.allHTTPHeaderFields);
+    NSLog(@"\n\nhttp body:\n%@\n\n", [[NSString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding]);
+    NSLog(@"\n\nresp:\n%@\n\n", respString);
+    
+    if ([resp statusCode] == 200) {
+        reqBlock(respData); // 回调
     }
-    
-    request.completionBlock = ^(NSDictionary *headers, NSString *body) {
-        
-        NSData *respData     = wr.responseData;
-        NSString *respString = [[NSString alloc] initWithData:respData encoding:NSUTF8StringEncoding];
-        NSLog(@"\n\nrespString:\n%@\n\n", respString);
-        
-        reqBlock(respData);
-    };
-    
-    request.errorBlock = ^(NSError *error) {
-        NSLog(@"post error: %@", error);
-    };
-    
-    [request startAsynchronous];
-//    NSString *respBody = [request startSynchronousWithError:nil];
-//    NSLog(@"respBody: %@", respBody);
 }
+
+
+
+
+
+
+
+
+
 
 
 
