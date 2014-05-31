@@ -336,17 +336,18 @@
     [dict enumerateKeysAndObjectsUsingBlock:^(NSString *k, NSString *v, BOOL *stop) {
         [kvBody appendFormat:@"--%@\r\nContent-Disposition: form-data; name=\"%@\"\r\n\r\n%@\r\n", boundary, k, v];
     }];
-    [bodyData appendData:[kvBody dataUsingEncoding:NSASCIIStringEncoding]];
+    [bodyData appendData:[kvBody dataUsingEncoding:NSUTF8StringEncoding]];
     
     // 处理二进制的提交参数
-    [dataBody appendFormat:@"--%@\r\nContent-Disposition: form-data; name=\"image\"\r\n", boundary];
-    [dataBody appendFormat:@"Content-type: %@\r\nContent-Transfer-Encoding: binary\r\n\r\n", mimeType];
+    [dataBody appendFormat:@"--%@\r\nContent-Disposition: form-data; name=\"image\"; filename=\"filename\"\r\n", boundary];
+    [dataBody appendFormat:@"Content-Type: %@\r\nContent-Transfer-Encoding: binary\r\n\r\n", mimeType];
     
-    [bodyData appendData:[dataBody dataUsingEncoding:NSASCIIStringEncoding]];
+    [bodyData appendData:[dataBody dataUsingEncoding:NSUTF8StringEncoding]];
     [bodyData appendData:data]; // 添加原始的二进制
+    NSLog(@"binary data:\n\n%@\n\n", data);
     
-    NSString *endBoundary = [NSString stringWithFormat:@"\r\n--%@--", boundary];
-    [bodyData appendData:[endBoundary dataUsingEncoding:NSASCIIStringEncoding]];
+    NSString *endBoundary = [NSString stringWithFormat:@"\r\n--%@--\r\n", boundary];
+    [bodyData appendData:[endBoundary dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSLog(@"POST body:\n%@\n\n", [[NSString alloc] initWithData:bodyData encoding:NSASCIIStringEncoding]);
 
@@ -362,10 +363,10 @@
     NSHTTPURLResponse *resp = nil;
     NSError *error          = nil;
     NSData *respData        = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error]; // 同步请求
-    NSString *respString    = [[NSString alloc] initWithData:respData encoding:NSASCIIStringEncoding];
+    NSString *respString    = [[NSString alloc] initWithData:respData encoding:NSUTF8StringEncoding];
 
     NSLog(@"\n\nhttp header:\n%@\n\n", request.allHTTPHeaderFields);
-    NSLog(@"\n\nhttp body:\n%@\n\n", [[NSString alloc] initWithData:request.HTTPBody encoding:NSASCIIStringEncoding]);
+    NSLog(@"\n\nhttp body:\n%@\n\n", [[NSString alloc] initWithData:request.HTTPBody encoding:NSUTF8StringEncoding]);
     NSLog(@"\n\nresp:\n%@\n\n", respString);
     
     if ([resp statusCode] == 200) {
