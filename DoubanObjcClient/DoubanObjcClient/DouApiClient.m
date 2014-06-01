@@ -223,24 +223,23 @@
  *  @param type    <#type description#>
  */
 - (void)requestWithSubPath:(NSString *)subPath
-                    method:(DouRequestMethod)method
-               requestType:(DouRequestType)requestType
+                    method:(NSString *)method
+               requestType:(NSString *)requestType
                       data:(NSDictionary *)dict
            completionBlock:(DouReqBlock)reqBlock
 {
     NSError *error               = nil;
-    NSString *baseURL            = (requestType == DouHTTP) ? kHttpApiBaseUrl : kHttpsApiBaseUrl;
-    NSString *methodStr          = (method == DouRequestGET) ? @"GET" : ((method == DouRequestPOST) ? @"POST" : @"DELETE");
+    NSString *baseURL            = ([requestType isEqualToString:@"HTTP"]) ? kHttpApiBaseUrl : kHttpsApiBaseUrl;
     NSURL *url                   = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, subPath]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
     
-    [request setHTTPMethod:methodStr];
+    [request setHTTPMethod:method];
     
-    if (requestType == DouHTTPS) {
+    if ([requestType isEqualToString:@"HTTPS"]) {
         [request setAllHTTPHeaderFields:@{@"Authorization": [NSString stringWithFormat:@"Bearer %@", [self accessToken]]}];
     }
     
-    if (method == DouRequestPOST && dict) {
+    if ([method isEqualToString:@"POST"] && dict) {
         NSData *postData = [NSKeyedArchiver archivedDataWithRootObject:dict];
         [request setHTTPBody:postData];
     }
@@ -258,22 +257,22 @@
 
 - (void)get:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock
 {
-    [self requestWithSubPath:subPath method:DouRequestGET requestType:DouHTTP data:nil completionBlock:reqBlock];
+    [self requestWithSubPath:subPath method:@"GET" requestType:@"HTTP" data:nil completionBlock:reqBlock];
 }
 
 - (void)httpsGet:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock
 {
-    [self requestWithSubPath:subPath method:DouRequestGET requestType:DouHTTPS data:nil completionBlock:reqBlock];
+    [self requestWithSubPath:subPath method:@"GET" requestType:@"HTTPS" data:nil completionBlock:reqBlock];
 }
 
 - (void)httpsPost:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock
 {
-    [self requestWithSubPath:subPath method:DouRequestPOST requestType:DouHTTPS data:nil completionBlock:reqBlock];
+    [self requestWithSubPath:subPath method:@"POST" requestType:@"HTTPS" data:nil completionBlock:reqBlock];
 }
 
 - (void)httpsDelete:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock
 {
-    [self requestWithSubPath:subPath method:DouRequestDELETE requestType:DouHTTPS data:nil completionBlock:reqBlock];
+    [self requestWithSubPath:subPath method:@"DELETE" requestType:@"HTTPS" data:nil completionBlock:reqBlock];
 }
 
 - (void)httpsPost:(NSString *)subPath withDict:(NSDictionary *)postDict completionBlock:(DouReqBlock)reqBlock
@@ -314,6 +313,16 @@
     }
 }
 
+/**
+ *  发送带一个二进制附件（一般是图片）的 POST 请求
+ *
+ *  @param subPath  请求的子路径
+ *  @param dict     K-V 格式的 POST 参数和值
+ *  @param data     二进制数据（例如上传图片）
+ *  @param paraName data 参数对应的上传参数，例如图片广播里的图片是 image
+ *  @param mimeType data 参数对应的 MIME 类型，例如 PNG 图片是 image/png
+ *  @param reqBlock 请求返回 200 时的回调 block
+ */
 - (void)httpsPost:(NSString *)subPath
    withDictionary:(NSDictionary *)dict
              data:(NSData *)data
@@ -328,9 +337,9 @@
     NSMutableDictionary * postDict = [[NSMutableDictionary alloc] init];
     NSMutableURLRequest *request   = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:url]];
     
-    NSMutableString *kvBody   = [[NSMutableString alloc] init]; // k-v 格式的参数
-    NSMutableString *dataBody = [[NSMutableString alloc] init]; // 二进制的参数，如图片
-    NSMutableData *bodyData   = [[NSMutableData alloc] init];   // 完整的 POST body
+    __block NSMutableString *kvBody = [[NSMutableString alloc] init];// k-v 格式的参数
+    NSMutableString *dataBody       = [[NSMutableString alloc] init];// 二进制的参数，如图片
+    NSMutableData *bodyData         = [[NSMutableData alloc] init];// 完整的 POST body
     
     // 遍历所有 k-v 文本的提交参数
     [dict enumerateKeysAndObjectsUsingBlock:^(NSString *k, NSString *v, BOOL *stop) {
@@ -344,12 +353,9 @@
     
     [bodyData appendData:[dataBody dataUsingEncoding:NSUTF8StringEncoding]];
     [bodyData appendData:data]; // 添加原始的二进制
-    NSLog(@"binary data:\n\n%@\n\n", data);
     
     NSString *endBoundary = [NSString stringWithFormat:@"\r\n--%@--\r\n", boundary];
     [bodyData appendData:[endBoundary dataUsingEncoding:NSUTF8StringEncoding]];
-    
-    NSLog(@"POST body:\n%@\n\n", [[NSString alloc] initWithData:bodyData encoding:NSASCIIStringEncoding]);
 
     // 添加头部信息
     [postDict setValue:authHeader forKeyPath:@"Authorization"];

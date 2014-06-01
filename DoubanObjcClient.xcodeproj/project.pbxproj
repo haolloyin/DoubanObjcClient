@@ -30,6 +30,8 @@
 		3F982AD6192E54AC00FD22AF /* DoubanShuo.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F982AD5192E54AC00FD22AF /* DoubanShuo.m */; };
 		3F982ADC192E559500FD22AF /* DoubanUser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3F982ADB192E559500FD22AF /* DoubanUser.m */; };
 		3FB7430A192BC743008A00C7 /* STHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3FB742F6192BC743008A00C7 /* STHTTPRequest.m */; };
+		3FBDF0C2193A2448003DBD88 /* douban-favicon.png in Resources */ = {isa = PBXBuildFile; fileRef = 3FBDF0C1193A2448003DBD88 /* douban-favicon.png */; };
+		3FBDF0C4193A31C2003DBD88 /* about_coder.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3FBDF0C3193A31C2003DBD88 /* about_coder.jpg */; };
 		3FBE97AB1927CD1E006D710B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBE97AA1927CD1E006D710B /* Foundation.framework */; };
 		3FBE97AD1927CD1E006D710B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBE97AC1927CD1E006D710B /* CoreGraphics.framework */; };
 		3FBE97AF1927CD1E006D710B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FBE97AE1927CD1E006D710B /* UIKit.framework */; };
@@ -106,6 +108,8 @@
 		3FB742C0192BBF1B008A00C7 /* DouObjcClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DouObjcClient.h; sourceTree = "<group>"; };
 		3FB742F5192BC743008A00C7 /* STHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STHTTPRequest.h; sourceTree = "<group>"; };
 		3FB742F6192BC743008A00C7 /* STHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STHTTPRequest.m; sourceTree = "<group>"; };
+		3FBDF0C1193A2448003DBD88 /* douban-favicon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "douban-favicon.png"; sourceTree = "<group>"; };
+		3FBDF0C3193A31C2003DBD88 /* about_coder.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = about_coder.jpg; sourceTree = "<group>"; };
 		3FBE97A71927CD1E006D710B /* DoubanObjcClient.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DoubanObjcClient.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3FBE97AA1927CD1E006D710B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		3FBE97AC1927CD1E006D710B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -156,6 +160,8 @@
 		3F48E3E819288FE30052E461 /* DoubanObjcClient */ = {
 			isa = PBXGroup;
 			children = (
+				3FBDF0C3193A31C2003DBD88 /* about_coder.jpg */,
+				3FBDF0C1193A2448003DBD88 /* douban-favicon.png */,
 				3F7453F01934F28D003F2CB5 /* image.png */,
 				3F982AD3192E549E00FD22AF /* model */,
 				3FB742CB192BC743008A00C7 /* vendor */,
@@ -402,7 +408,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3F982AD2192E548800FD22AF /* README.md in Resources */,
+				3FBDF0C2193A2448003DBD88 /* douban-favicon.png in Resources */,
 				3F982AC4192E548800FD22AF /* LICENSE.md in Resources */,
+				3FBDF0C4193A31C2003DBD88 /* about_coder.jpg in Resources */,
 				3FBE97C31927CD1E006D710B /* Images.xcassets in Resources */,
 				3FBE97B51927CD1E006D710B /* InfoPlist.strings in Resources */,
 				3FBE97BE1927CD1E006D710B /* Main.storyboard in Resources */,

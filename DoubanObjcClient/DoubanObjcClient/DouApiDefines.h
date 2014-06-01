@@ -18,11 +18,11 @@
 #define kTokenURL                   @"https://www.douban.com/service/auth2/token"
 
 
-#pragma mark - User MUST change bellow configs according to your case
+#pragma mark - Developers MUST change bellow configs according to your case
 
-#define kApiKey                     @"00b92b2386aaa415022b816a93ffec3f"
-#define kApiSecret                  @"e2d30b80812cf232"
-#define kRedirectURL                @"https://github.com/haolloyin"
+#define kApiKey                     @"Your_API_Key"
+#define kApiSecret                  @"Your_API_Secret"
+#define kRedirectURL                @"Your_Redirect_URL"
 #define kOAuthScope                 @"douban_basic_common,shuo_basic_r,shuo_basic_w"
 
 

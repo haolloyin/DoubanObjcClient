@@ -41,10 +41,15 @@
     NSLog(@"identifier: %@", identifier);
     
     if ([segue.identifier isEqualToString:@"BeginDoubanOAuth"]) {
+        
         // 如果确定用 modal 方式，要先取出 NavagationController 的 topViewController 再赋值
         UINavigationController *navController = segue.destinationViewController;
         DouOAuthViewController *controller = (DouOAuthViewController *)navController.topViewController;
         controller.presentStype = DouOAuthViewPresentWithModal;
+        
+        // 如果用 push 方式，直接修改 DouOAuthViewController.presentStype 属性为 DouOAuthViewPresentWithPush
+//        DouOAuthViewController *controller = segue.destinationViewController;
+//        controller.presentStype = DouOAuthViewPresentWithPush;
     }
 }
 
@@ -98,7 +103,7 @@
     
 //    [DoubanShuo statuses_withId:1402641133 needPacked:YES];
 //    [DoubanShuo statusesWithId:1403330980]; // 获取一条转播
-//    [DoubanShuo user_timeline_withUserIdOrName:@"haolloyin" since:0 until:0];
+    [DoubanShuo user_timeline_withUserIdOrName:@"ahbei" since:0 until:0];
 //    [DoubanShuo home_timeline_withSince:1397704049 until:0 count:4 start:0];
 //    [DoubanShuo statuses_comments_withId:1402640365 start:1390823405 count:2];
     
@@ -106,20 +111,20 @@
 //    [DoubanShuo statuses_reshare_withId:1402640365];
 //    [DoubanShuo delete_statuses_withId:1404392507];
     
-//    NSString *text = [NSString stringWithFormat:@"just test. --%@", [NSDate date]];
+//    NSString *text = [NSString stringWithFormat:@"测试发送带图片的广播，成功啦！！！ --%@", [NSDate date]];
 //    [DoubanShuo post_statuses_withText:text image:nil]; // 纯文字
-    
+
     // 推荐网址
 //    [DoubanShuo post_statuses_withText:@"测试推荐网址"
 //                             rec_title:@"豆瓣广播 Api V2"
 //                               rec_url:@"http://developers.douban.com/wiki/?title=shuo_v2"
 //                              rec_desc:@"描述啦" rec_image:@"http://img3.douban.com/icon/u45742059-2.jpg"];
     
-    NSString *text = [NSString stringWithFormat:@"just test. --%@", [NSDate date]];
-////    UIImage *image = [UIImage imageNamed:@"image.png"];
-////    NSData *data = UIImagePNGRepresentation(image);
-    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"image" ofType:@"png"]];
-    [DoubanShuo post_statuses_withText:text image:data];
+//    NSString *text = [NSString stringWithFormat:@"测试发送带图片的广播，成功啦！！！--%@", [NSDate date]];
+//    UIImage *image = [UIImage imageNamed:@"image.png"];
+//    NSData *data = UIImagePNGRepresentation(image);
+//    NSData *data = [NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"about_coder" ofType:@"jpg"]];
+//    [DoubanShuo post_statuses_withText:text image:data];
     
 //    [DoubanUser get_user_withName:@"ahbei"];
 //    [DoubanUser current_user];
@@ -131,10 +136,6 @@
     
 //    [DoubanUser block_user_withUserId:1000001]; // error
 }
-
-- (IBAction)testDeleteRequest:(id)sender {
-}
-
 
 
 
