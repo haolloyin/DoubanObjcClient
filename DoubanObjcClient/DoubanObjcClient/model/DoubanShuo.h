@@ -10,6 +10,34 @@
 #import "DoubanUser.h"
 #import "DoubanBaseModel.h"
 
+/**
+ *  广播附件里的多媒体信息
+ */
+@interface DoubanShuoMedia : DoubanBaseModel
+
+@property (nonatomic, strong) NSURL *href;
+@property (nonatomic, strong) NSURL *src;
+@property (nonatomic, copy) NSString *original_src;
+@property (nonatomic, copy) NSString *secret_pid;
+@property (nonatomic, copy) NSString *type;
+
+@end
+
+/**
+ *  广播里的附件
+ */
+@interface DoubanShuoAttachment : DoubanBaseModel
+
+@property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSString *title;
+@property (nonatomic, copy) NSString *caption;
+@property (nonatomic, copy) NSString *type;
+@property (nonatomic, strong) NSURL *href;
+@property (nonatomic, strong) DoubanShuoMedia *media; // 保存 DoubanShuoMedia 实例
+@property (nonatomic, strong) NSDictionary *properties;
+
+@end
+
 @interface DoubanShuo : DoubanBaseModel
 
 @property (nonatomic, assign) NSUInteger iid;
@@ -23,6 +51,7 @@
 @property (nonatomic, strong) NSDate *createdAt;
 @property (nonatomic, strong) DoubanSimpleUser *user;
 @property (nonatomic, strong) DoubanShuo *resharedStatus; // 转播的广播对象，这个属性只有在当前广播是一条转播的条件下才会有
+@property (nonatomic, strong) DoubanShuoAttachment *attachments; // 保存 DoubanShuoAttachment 实例
 
 + (DoubanShuo *)statuses_withId:(NSUInteger)iid needPacked:(BOOL)needPacked;
 

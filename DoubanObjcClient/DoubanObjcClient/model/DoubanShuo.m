@@ -9,6 +9,46 @@
 #import "DoubanShuo.h"
 #import "DouApiClient.h"
 
+
+@implementation DoubanShuoMedia
+
+#pragma mark - Mantle
+
++ (NSValueTransformer *)hrefJSONTransformer {
+    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+}
+
++ (NSValueTransformer *)srcJSONTransformer {
+    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+}
+
+@end
+
+
+@implementation DoubanShuoAttachment
+
++ (NSValueTransformer *)hrefJSONTransformer {
+    return [NSValueTransformer valueTransformerForName:MTLURLValueTransformerName];
+}
+
++ (NSValueTransformer *)mediaJSONTransformer {
+//    return [MTLValueTransformer mtl_JSONArrayTransformerWithModelClass:[DoubanShuoMedia class]];
+    
+    return [MTLValueTransformer reversibleTransformerWithBlock:^(NSArray *jsonArr) {
+        
+        DoubanShuoMedia *media = nil;
+        
+        if ([jsonArr count] == 1) {
+            // 目前 media 数组里面只有一个元素，因为这么处理，方便后续应用
+            media = [MTLJSONAdapter modelOfClass:[DoubanShuoMedia class] fromJSONDictionary:jsonArr[0] error:nil];
+        }
+        
+        return media;
+    }];
+}
+
+@end
+
 @implementation DoubanShuo
 
 #pragma mark - Mantle
@@ -16,16 +56,9 @@
 + (NSDictionary *)JSONKeyPathsByPropertyKey {
     return @{
         @"iid": @"id",
-        @"title": @"title",
-        @"text": @"text",
-        @"reshared_count": @"reshared_count",
-        @"like_count": @"like_count",
-        @"comments_count": @"comments_count",
-        @"can_reply": @"can_reply",
-        @"liked": @"liked",
         @"createdAt": @"created_at",
-        @"user": @"user",
-        @"resharedStatus": @"reshared_status"
+        @"resharedStatus": @"reshared_status",
+        @"attachments": @"attachments"
     };
 }
 
@@ -41,8 +74,33 @@
     return [MTLValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[DoubanSimpleUser class]];
 }
 
+//+ (NSValueTransformer *)can_replyJSONTransformer {
+//    return [NSValueTransformer valueTransformerForName:MTLBooleanValueTransformerName];
+//}
+//
+//+ (NSValueTransformer *)likedJSONTransformer {
+//    return [NSValueTransformer valueTransformerForName:MTLBooleanValueTransformerName];
+//}
+
 + (NSValueTransformer *)resharedStatusJSONTransformer {
     return [MTLValueTransformer mtl_JSONDictionaryTransformerWithModelClass:[DoubanShuo class]];
+}
+
++ (NSValueTransformer *)attachmentsJSONTransformer {
+//    return [MTLValueTransformer mtl_JSONArrayTransformerWithModelClass:[DoubanShuoAttachment class]];
+    
+    return [MTLValueTransformer reversibleTransformerWithBlock:^(NSArray *jsonArr) {
+        
+        DoubanShuoAttachment *attachment = nil;
+        
+        if ([jsonArr count] == 1) {
+            // 目前 attachments 数组里面只有一个元素，因为这么处理，方便后续应用
+            attachment = [MTLJSONAdapter modelOfClass:[DoubanShuoAttachment class] fromJSONDictionary:jsonArr[0] error:nil];
+            
+        }
+        
+        return attachment;
+    }];
 }
 
 
@@ -69,7 +127,7 @@
     
     //TODO 当 pack=true 时，返回的 JSON 包含 resharers、like、comments，更复杂了，需要更新 DoubanShuo 模型
     NSString *para = (needPacked) ? @"?pack=true" : @"";
-    NSString *url = [NSString stringWithFormat:@"shuo/v2/statuses/%d%@", iid, para];
+    NSString *url  = [NSString stringWithFormat:@"shuo/v2/statuses/%d%@", iid, para];
     [client get:url withCompletionBlock:callback];
     
     return shuo;
