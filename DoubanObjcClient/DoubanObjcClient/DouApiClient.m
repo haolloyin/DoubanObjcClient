@@ -193,7 +193,7 @@
     NSString *expireTime = [USER_DEFAULTS objectForKey:kExpiresInKey];
     NSLog(@"accessToken: %@, expireTime: %@", access, expireTime);
     
-    if (!access || !expireTime) {
+    if (!access || !expireTime || [self hasExpired]) {
         return YES; // 如果没有 accessToken 或过期时间，需要重新授权
     }
     return NO;
