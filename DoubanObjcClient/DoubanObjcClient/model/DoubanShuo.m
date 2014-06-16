@@ -183,19 +183,32 @@
     return [timelines copy];
 }
 
-+ (NSArray *)home_timeline_withSince:(NSUInteger)since until:(NSUInteger)until count:(NSUInteger)count start:(NSUInteger)start
++ (NSArray *)home_timeline_withSince:(NSUInteger)since
+                               until:(NSUInteger)until
+                               count:(NSUInteger)count
+                               start:(NSUInteger)start
+                          errorBlock:(void (^)(void))errorBlock
+                        successBlock:(void (^)(NSData *data))successBlock
 {
     DouApiClient *client              = [DouApiClient sharedInstance];
     __block NSMutableArray *timelines = [[NSMutableArray alloc] init];
     
     DouReqBlock callback = ^(NSData *data) {
-        NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:1 error:nil];
         
-        [arr enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
-            NSError *error   = nil;
-            DoubanShuo *shuo = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
-            [timelines addObject:shuo];
-        }];
+        if (data) {
+//            NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:1 error:nil];
+//            
+//            [arr enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
+//                NSError *error   = nil;
+//                DoubanShuo *shuo = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
+//                [timelines addObject:shuo];
+//            }];
+            
+            successBlock(data);
+        }
+        else {
+            errorBlock();
+        }
     };
     
     NSUInteger min_id   = (since > 0) ? since : 0;

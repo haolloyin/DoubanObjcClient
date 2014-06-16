@@ -228,7 +228,6 @@
                       data:(NSDictionary *)dict
            completionBlock:(DouReqBlock)reqBlock
 {
-    NSError *error               = nil;
     NSString *baseURL            = ([requestType isEqualToString:@"HTTP"]) ? kHttpApiBaseUrl : kHttpsApiBaseUrl;
     NSURL *url                   = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", baseURL, subPath]];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url];
@@ -244,15 +243,29 @@
         [request setHTTPBody:postData];
     }
     
-    NSHTTPURLResponse *resp         = nil;
-    NSData *respData            = [NSURLConnection sendSynchronousRequest:request returningResponse:&resp error:&error];
-    
-    NSString *respString = [[NSString alloc] initWithData:respData encoding:NSUTF8StringEncoding];
-    NSLog(@"\n\nrespString:\n%@\n\n", respString);
-    
-    if ([resp statusCode] == 200) {
-        reqBlock(respData); // 回调
-    }
+    NSOperationQueue *queue = [[NSOperationQueue alloc] init];
+    [NSURLConnection sendAsynchronousRequest:request
+                                       queue:queue
+                           completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+                               
+                               NSString *respString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                               NSLog(@"\n\nrespString:\n%@\n\n", respString);
+                               
+                               NSHTTPURLResponse *resp = (NSHTTPURLResponse *)response;
+                               NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+                               
+                               if (!error && dict && [resp statusCode] == 200) {
+                                   // 回到主线程刷新 UI
+                                   dispatch_async(dispatch_get_main_queue(), ^() {
+                                       reqBlock(data);
+                                   });
+                               }
+                               else {
+                                   dispatch_async(dispatch_get_main_queue(), ^() {
+                                      reqBlock(nil); 
+                                   });
+                               }
+                           }];
 }
 
 - (void)get:(NSString *)subPath withCompletionBlock:(DouReqBlock)reqBlock

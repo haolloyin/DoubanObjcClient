@@ -5,34 +5,34 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>1C077421-D019-4C2A-A829-11DBEF40404D</string>
+	<string>F316C89A-BEC0-404E-AE2F-4951E4F23D55</string>
 	<key>IDESourceControlProjectName</key>
 	<string>DoubanObjcClient</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>25DB5320-EF42-41E3-B44A-58E15897AD07</key>
-		<string>ssh://gitcafe.com/haoio/DoubanObjcClient.git</string>
+		<key>B017D4EA-BF8B-4715-A02B-C6E178E29C14</key>
+		<string>https://github.com/haolloyin/DoubanObjcClient.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>DoubanObjcClient.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>25DB5320-EF42-41E3-B44A-58E15897AD07</key>
+		<key>B017D4EA-BF8B-4715-A02B-C6E178E29C14</key>
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://gitcafe.com/haoio/DoubanObjcClient.git</string>
+	<string>https://github.com/haolloyin/DoubanObjcClient.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>25DB5320-EF42-41E3-B44A-58E15897AD07</string>
+	<string>B017D4EA-BF8B-4715-A02B-C6E178E29C14</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>25DB5320-EF42-41E3-B44A-58E15897AD07</string>
+			<string>B017D4EA-BF8B-4715-A02B-C6E178E29C14</string>
 			<key>IDESourceControlWCCName</key>
 			<string>DoubanObjcClient</string>
 		</dict>

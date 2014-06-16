@@ -66,7 +66,12 @@
 
 + (NSArray *)user_timeline_withUserIdOrName:(NSString *)user since:(NSUInteger)since until:(NSUInteger)until;
 
-+ (NSArray *)home_timeline_withSince:(NSUInteger)since until:(NSUInteger)until count:(NSUInteger)count start:(NSUInteger)start;
++ (NSArray *)home_timeline_withSince:(NSUInteger)since
+                               until:(NSUInteger)until
+                               count:(NSUInteger)count
+                               start:(NSUInteger)start
+                          errorBlock:(void (^)(void))errorBlock
+                        successBlock:(void (^)(NSData *data))successBlock;
 
 /**
  *  获取指定一条广播的评论列表
