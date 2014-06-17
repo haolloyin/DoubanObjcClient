@@ -70,8 +70,7 @@
                                until:(NSUInteger)until
                                count:(NSUInteger)count
                                start:(NSUInteger)start
-                          errorBlock:(void (^)(void))errorBlock
-                        successBlock:(void (^)(NSData *data))successBlock;
+                     completionBlock:(void (^)(NSData *data))completionBlock;
 
 /**
  *  获取指定一条广播的评论列表

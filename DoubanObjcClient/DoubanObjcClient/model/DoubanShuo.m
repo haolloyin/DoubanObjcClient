@@ -187,29 +187,10 @@
                                until:(NSUInteger)until
                                count:(NSUInteger)count
                                start:(NSUInteger)start
-                          errorBlock:(void (^)(void))errorBlock
-                        successBlock:(void (^)(NSData *data))successBlock
+                     completionBlock:(void (^)(NSData *data))completionBlock
 {
     DouApiClient *client              = [DouApiClient sharedInstance];
     __block NSMutableArray *timelines = [[NSMutableArray alloc] init];
-    
-    DouReqBlock callback = ^(NSData *data) {
-        
-        if (data) {
-//            NSArray *arr = [NSJSONSerialization JSONObjectWithData:data options:1 error:nil];
-//            
-//            [arr enumerateObjectsUsingBlock:^(NSDictionary *dict, NSUInteger idx, BOOL *stop) {
-//                NSError *error   = nil;
-//                DoubanShuo *shuo = [MTLJSONAdapter modelOfClass:DoubanShuo.class fromJSONDictionary:dict error:&error];
-//                [timelines addObject:shuo];
-//            }];
-            
-            successBlock(data);
-        }
-        else {
-            errorBlock();
-        }
-    };
     
     NSUInteger min_id   = (since > 0) ? since : 0;
     NSUInteger max_id   = (until > 0) ? until : INT_MAX;
@@ -219,7 +200,7 @@
     NSMutableString *url = [NSMutableString
                             stringWithFormat:@"shuo/v2/statuses/home_timeline?since_id=%d&until_id=%d&count=%d&start=%d",
                             min_id, max_id, icount, start_id];
-    [client httpsGet:url withCompletionBlock:callback];
+    [client httpsGet:url withCompletionBlock:completionBlock];
     
     return [timelines copy];
 }
